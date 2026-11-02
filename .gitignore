@@ -1,0 +1,17 @@
+node_modules/
+.env
+.env.local
+tests/playwright/.auth/
+tests/test-results/
+tests/playwright-report/
+tests/qa-report/
+tests/reports/
+tests/*-results/
+tests/*-report/
+tests/report-recheck-html/
+tests/catalog.json
+*.log
+
+ai-support/evidence/
+ai-support/history/
+ai-support/logs/

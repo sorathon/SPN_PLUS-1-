@@ -1,0 +1,12 @@
+{
+  "ids": [
+    "TC-EXP-070",
+    "TC-GCL-154",
+    "TC-GCL-156",
+    "TC-GCL-171",
+    "TC-GCL-172",
+    "TC-GCL-183"
+  ],
+  "reason": "User removed cases using the Send to ThaiCustoms button, including GCL Send preflight. File download/print and Send Cancel use different buttons.",
+  "additionalRemoval": "User explicitly removed TC-GCL-183, TC-GCL-154 and TC-GCL-156."
+}

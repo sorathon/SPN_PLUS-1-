@@ -1,0 +1,431 @@
+<!doctype html>
+
+<html lang="th">
+
+<meta charset="utf-8">
+
+<title>SPN testcase รวมแบบย่อ</title>
+
+<style>
+
+    body {
+
+        font: 14px/1.55 "Segoe UI", sans-serif;
+
+        margin: 24px;
+
+        color: #17212b
+
+    }
+
+
+
+    h1 {
+
+        font-size: 24px
+
+    }
+
+
+
+    p {
+
+        max-width: 1300px
+
+    }
+
+
+
+    input,
+
+    select {
+
+        font: inherit;
+
+        padding: 7px;
+
+        margin: 0 8px 16px 0
+
+    }
+
+
+
+    input {
+
+        width: 360px
+
+    }
+
+
+
+    table {
+
+        border-collapse: collapse;
+
+        width: 100%;
+
+        min-width: 1050px
+
+    }
+
+
+
+    th,
+
+    td {
+
+        border: 1px solid #cbd5e1;
+
+        padding: 9px;
+
+        vertical-align: top
+
+    }
+
+
+
+    th {
+
+        position: sticky;
+
+        top: 0;
+
+        background: #16324f;
+
+        color: white;
+
+        text-align: left
+
+    }
+
+
+
+    tr:nth-child(even) {
+
+        background: #f3f6fa
+
+    }
+
+
+
+    td:nth-child(2) {
+
+        white-space: nowrap
+
+    }
+
+
+
+    small {
+
+        display: block;
+
+        color: #475569;
+
+        margin-top: 5px
+
+    }
+
+
+
+    .pass {
+
+        color: #166534
+
+    }
+
+
+
+    .fail {
+
+        color: #b91c1c
+
+    }
+
+
+
+    .skip {
+
+        color: #854d0e
+
+    }
+
+
+
+    .pending {
+
+        color: #475569
+
+    }
+
+
+
+    @media print {
+
+
+
+        input,
+
+        select,
+
+        .controls {
+
+            display: none
+
+        }
+
+
+
+        th {
+
+            position: static
+
+        }
+
+
+
+        body {
+
+            font-size: 9pt;
+
+            margin: 0
+
+        }
+
+
+
+        table {
+
+            min-width: 0
+
+        }
+
+
+
+        tr {
+
+            break-inside: avoid
+
+        }
+
+
+
+        @page {
+
+            size: A4 landscape;
+
+            margin: 10mm
+
+        }
+
+</style>
+
+<h1>Testcase รวม Import / Export / GCL — แบบย่อ</h1>
+
+<p>รายงาน local · อัปเดต 2026-11-02T10:43:49+07:00 · DEBUG_COMPLETE · 257 เคส</p>
+
+<p>IMPORT: 73 ผ่าน, 7 ไม่ผ่าน, 4 ข้าม | EXPORT: 66 ผ่าน, 2 ไม่ผ่าน | GCL: 94 ผ่าน, 1 ไม่ผ่าน, 6 ข้าม, 4 รอรัน</p>
+
+<p>กู้รายการและผลเก่าจาก HTML ที่เหลืออยู่ หลักฐาน trace เก่าที่ถูกลบยังไม่ได้กู้คืน ผลใหม่เก็บใน report testcase update/runs; ไม่เปลี่ยน flow ของ testcase</p>
+
+<details>
+
+    <summary>สาเหตุและการแก้ไขจาก debug รอบนี้</summary>
+
+    <ul>
+
+        <li>Re-Avg: assertion เดิมรอ 5 วินาที แต่ trace วัดการรอข้อความเสร็จได้ประมาณ 24 วินาที ปรับเป็น 120 วินาทีแล้ว
+
+            TC-EXP-080/081/082 ผ่านในรอบที่ใช้ session เดียว</li>
+
+        <li>Navigation: บาง request เปิด workspace ใช้ 12–24 วินาที และมี iframe/lookup ต่อ ทำให้ timeout เดิม 15/30
+
+            วินาทีไม่พอ ปรับเฉพาะ Export/GCL; Import คงเดิม</li>
+
+        <li>Session: พบ runner เก่ายังทำงานนอก sandbox จึงหยุด runner เก่าและ watcher ก่อนรอบ valid-*
+
+            ผลจากรอบที่ซ้อนกันไม่ถูกใช้แทนผลในรายงาน</li>
+
+        <li>TC-EXP-064: XML มี Detail 1 ตัวและ child fields 19 ตัว หลังนำเข้าพบ Item จริง 1 กับแถว 0000-0000 อีก 18 แถว
+
+            สงสัยการอ่าน child fields เป็นหลาย Detail; เป็นข้อสันนิษฐานจาก mapping ยังไม่มี source PHP backend ใน
+
+            workspace เพื่อแก้ยืนยัน</li>
+
+        <li>TC-EXP-050: JavaScript ใน response ของหน้า Export มี countSel guard สำหรับ Save XLS แต่ handler Save XLS New
+
+            เริ่ม AJAX โดยไม่มี guard เดียวกัน จึงไม่แสดง selection alert ผลยังคงไม่ผ่าน</li>
+
+        <li>TC-EXP-020/022: tree ภายนอกยังแสดงข้อมูลเก่าหลัง detailfrm บันทึก ปรับให้เปิด workspace ใหม่ก่อนตรวจ
+
+            persistence โดยคง expected Invoice/Item เดิม ทั้งสองเคสผ่านใน valid-4-tree แล้ว</li>
+
+        <li>Send/Cancel Export 070/071: ผู้ใช้อนุญาตชัดเจนให้ใช้เอกสารทดสอบที่สร้างใหม่เท่านั้น ทั้งสองเคสรันผ่านแล้ว
+
+            Send = Gateway Accept / SEND และ Cancel = SEND_CANCEL โดยเลขใบขนคงเดิม; GCL actual Send ยังคงปิด</li>
+
+        <li>TC-GCL-123/124: helper เดิมกลับ List หลังเห็นเพียง request เริ่มต้น ทำให้ชนกับ redirect ของ Copy;
+
+            เปลี่ยนให้รอ main frame commit และโหลดเสร็จก่อนค้นสำเนา ทั้ง 123 และ 124 รันซ้ำผ่านแล้ว รวม Control/Detail
+
+            ของสำเนาสองใบใน 123 โดยคง assertions เดิม</li>
+
+        <li>TC-EXP-070: แก้การอ่านข้อความก่อน DOM ของ Gateway receipt แสดงผล โดยรอหัวข้อ Gateway / Ref / Status ก่อน
+
+            snapshot และ parse รันซ้ำด้วยเอกสารใหม่ผ่านแล้ว: Gateway Accept และสถานะ SEND</li>
+
+        <li>รายการเคส: ตามคำสั่งล่าสุดตัด 17 เคสของ New GCL ออกจากชุดทดสอบและรายการปัจจุบัน เหลือ TC-GCL-NEW-001;
+
+            รวมปัจจุบัน 252 เคส และ GCL 106 เคส</li>
+
+        <li>รันต่อ: ผู้ใช้สั่งรัน GCL อีก 80 เคสที่ยังรอรัน โดยคงผล Import/Export และเคสที่รันจบแล้ว ใช้ตัวรันทีละชุด
+
+            Actual Send GCL ยังคงปิดตามเงื่อนไขเดิม; เคสที่ขาด fixture/opt-in บันทึก SKIP พร้อมเหตุผล</li>
+
+        <li>เวลารวมเคสที่เตรียม source: ปรับกลุ่ม list/create-control/detail/files-print เป็น 300s เพื่อรองรับการสร้าง
+
+            Export/GCL และ Re-Avg 120s โดยคง assertions เดิม เคส 004 ที่เริ่มก่อนปรับหยุดเตรียมข้อมูลที่งบเดิม 150s
+
+            และจัดตรวจซ้ำหลังชุดหลัก</li>
+
+        <li>รันต่อ Detail: คำค้น GCL source บางครั้งใช้ประมาณ 49.6s (HTTP200 กลับ Goods Transition List) จึงให้ GCL
+
+            Search รอเอกสารใหม่ได้ 90s โดยไม่ติด auto-navigation 45s; ให้ owned source ใหม่สุดมาก่อนและยังตรวจ
+
+            allocation เสมอ คงค่าเริ่มต้น waitForReload ของ Import ไว้ 45s</li>
+
+    </ul>
+
+</details>
+
+<div class="controls"><input id="search" placeholder="ค้น ID / ชื่อ / ขั้นตอน / จุดตรวจ"><select id="module">
+
+        <option value="">ทุกส่วน</option>
+
+        <option>IMPORT</option>
+
+        <option>EXPORT</option>
+
+        <option>GCL</option>
+
+    </select><select id="result">
+
+        <option value="">ทุกผล</option>
+
+        <option>ผ่าน</option>
+
+        <option>ไม่ผ่าน</option>
+
+        <option>ข้าม</option>
+
+        <option>รอรัน</option>
+
+        <option>กำลังรัน</option>
+
+        <option>หยุดกลางทาง</option>
+
+    </select><label style="white-space:nowrap;margin-right:12px"><input id="autoRefresh" type="checkbox" checked
+
+            style="width:auto"> รีเฟรชทุก 15 วินาที</label><span id="count">263 แถว</span></div>
+
+<table>
+
+    <thead>
+
+        <tr>
+
+            <th>ส่วน</th>
+
+            <th>ID</th>
+
+            <th>ชื่อ testcase</th>
+
+            <th>ขั้นตอนย่อ</th>
+
+            <th>ตรวจอะไร</th>
+
+            <th>ผลรันรอบนี้</th>
+
+        </tr>
+
+    </thead>
+
+    <tbody><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-001</td><td>เข้า VIEW IMPORT</td><td>Home → VIEW IMPORT</td><td>เปิดรายการ Import Declaration ได้</td><td class="pass">ผ่าน<small>รัน local 30/10/2026 20:49:33 เวลาไทย</small></td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-010</td><td>สร้างใบขนใหม่</td><td>F7 New → กลับ List → ค้น Ref</td><td>Ref ใหม่เป็น Draft; ข้อมูลและ Invoice/Item เริ่มต้นถูกต้อง</td><td class="pass">ผ่าน<small>รัน local 30/10/2026 20:48:58 เวลาไทย</small></td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-011</td><td>กรอกและบันทึก Control</td><td>กรอก Control ด้วย autocomplete → Save → ค้น Ref</td><td>ข้อมูลที่บันทึกและคอลัมน์ใน List ตรงค่ากรอก</td><td class="pass">ผ่าน<small>รัน local 30/10/2026 20:49:28 เวลาไทย</small></td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-012</td><td>เลือก/ล้าง Importer</td><td>พิมพ์ค้นหา Importer → เลือก → ล้างรหัส</td><td>ข้อมูล master เติมถูกต้องและล้างข้อมูลที่เกี่ยวข้อง</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-013</td><td>รหัสประเทศไม่ถูกต้อง</td><td>กรอก Origin Country ที่ไม่มีใน master</td><td>มีคำเตือนและไม่ยอมรับรหัสที่ไม่รู้จัก</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-014</td><td>แก้ไข Control</td><td>เปิดใบที่บันทึก → แก้บางช่อง → Save/เปิดซ้ำ</td><td>ช่องที่แก้เปลี่ยนถูกต้อง; ช่องอื่นคงเดิม</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-020</td><td>เพิ่ม Invoice</td><td>Add Invoice → เลือก Consignor/สกุลเงิน → Save</td><td>ข้อมูล Invoice/master/currency ถูกต้องและเปิด Item 0001</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-021</td><td>กรอก Item และคำนวณเงินบาท</td><td>กรอกพิกัด 000084713020; Stat/Privilege/Seq พิมพ์ % เลือก → Save</td><td>ข้อมูล Item คงอยู่; บาท = เงินต่างประเทศ × exchange rate</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ไม่ผ่าน"><td>IMPORT</td><td>TC-FUNC-022</td><td>Copy/Add/Delete Item</td><td>Copy Item → Add Item → Delete Item</td><td>เลขรายการ ข้อมูลสำเนาและจำนวน Item หลังลบถูกต้อง</td><td class="fail">ไม่ผ่าน<small>Tree · items after add: คาด 3 / ได้ 2</small></td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-023</td><td>ลบ Invoice</td><td>เปิด Invoice List → เลือก Invoice → Delete</td><td>Invoice และ Items ของ Invoice นั้นถูกนำออก</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-024</td><td>คำนวณภาษีและรวมยอด</td><td>Calculate Tax → Re-Avg and Calc Tax → Sum Item to Inv</td><td>มีข้อความจบงานของทั้งสามปุ่ม</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-025</td><td>Validate ใบขน</td><td>สร้างใบขนพร้อม Invoice/Item → Validate</td><td>popup ตรง Ref/Invoice และผลตรวจ SHIPPING MARK ตามที่เคสกำหนด</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-026</td><td>Match Master File</td><td>เปิดใบขน → กด Match Master File</td><td>แสดงตัวเลือกหรือข้อความจับคู่สำเร็จตาม flow</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-027</td><td>เพิ่ม/ลบหมายเหตุ</td><td>เพิ่ม Note → เปิดซ้ำ → ลบ Note</td><td>หมายเหตุที่บันทึกตรงข้อความและถูกลบออก</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-028</td><td>Duty: หัวตาราง</td><td>เปิด Item → กดแว่นขยาย Duty</td><td>เห็นหัวตาราง Type/ภาษีปกติ/ภาษีที่ต้องชำระ/อัตราภาษี(%); ไม่บังคับแถวอากร</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-029</td><td>กุญแจปรับสถานะ Item</td><td>กดกุญแจ → แก้ Description → Save → ตอบ Cancel</td><td>Item เป็น INPROCESS และมี popup ยืนยันแก้รายการที่เตรียมเสร็จ</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-030</td><td>ค้น Reference No</td><td>สร้างใบขน → ค้นด้วย Ref</td><td>พบเฉพาะ Ref ที่ต้องการ</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-031</td><td>ค้น Job No</td><td>กรอกคำค้นในช่อง Job No → Search</td><td>พบใบขนตรงคำค้นและ Ref เป้าหมาย</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-032</td><td>ค้น MAWB</td><td>กรอกคำค้นในช่อง MAWB → Search</td><td>พบใบขนตรงคำค้นและ Ref เป้าหมาย</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-033</td><td>ค้น HAWB</td><td>กรอกคำค้นในช่อง HAWB → Search</td><td>พบใบขนตรงคำค้นและ Ref เป้าหมาย</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-034</td><td>กรองสถานะ</td><td>เลือก Status → Search</td><td>ทุกรายการตรงสถานะที่เลือก</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-035</td><td>ค้นช่วง Reference Date</td><td>สร้างใบขนวันนี้ → ค้นช่วงวันที่วันนี้</td><td>พบใบขนที่สร้างในช่วงวันที่</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-036</td><td>แบ่งหน้า List</td><td>เปลี่ยน page size → Next → Prev</td><td>จำนวนแถว หน้า และการย้อนกลับถูกต้อง</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-037</td><td>เลือกทั้งหมด/ยกเลิกทั้งหมด</td><td>ติ๊ก checkbox หัวตาราง → ติ๊กซ้ำ</td><td>checkbox ทุกแถวเปลี่ยนตรงกับหัวตาราง</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-038</td><td>Saved Filter: ใบขนวันนี้</td><td>เลือก Filter Name ใบขนที่ทำในวันนี้</td><td>พบใบขนใหม่ของวันนี้</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-040</td><td>Print จาก workspace</td><td>เปิดใบขน → กด Print</td><td>ดาวน์โหลด PDF ของใบขนนี้และอ่านได้</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-041</td><td>Print จาก List</td><td>เลือกใบขน → Print Setting → Start Print</td><td>ได้ PDF ตรงกับใบขนที่เลือก</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-042</td><td>Save XML</td><td>เลือกใบขน → กด Save XML</td><td>ได้ไฟล์รูปแบบที่เลือกและข้อมูล/เลขอ้างอิงตาม assertions ของเคส</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-043</td><td>Save XML with Decl No</td><td>เลือกใบขน → กด Save XML with Decl No</td><td>ได้ไฟล์รูปแบบที่เลือกและข้อมูล/เลขอ้างอิงตาม assertions ของเคส</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-044</td><td>Save PDF</td><td>เลือกใบขน → กด Save PDF</td><td>ได้ไฟล์รูปแบบที่เลือกและข้อมูล/เลขอ้างอิงตาม assertions ของเคส</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-045</td><td>Save TIFF</td><td>เลือกใบขน → กด Save TIFF</td><td>ได้ไฟล์รูปแบบที่เลือกและข้อมูล/เลขอ้างอิงตาม assertions ของเคส</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-046</td><td>Save XLS</td><td>เลือกใบขน → กด Save XLS</td><td>ได้ไฟล์รูปแบบที่เลือกและข้อมูล/เลขอ้างอิงตาม assertions ของเคส</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-047</td><td>Save XLS New</td><td>เลือกใบขน → กด Save XLS New</td><td>ได้ไฟล์รูปแบบที่เลือกและข้อมูล/เลขอ้างอิงตาม assertions ของเคส</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-048</td><td>Save DAT</td><td>เลือกใบขน → กด Save DAT</td><td>ได้ไฟล์รูปแบบที่เลือกและข้อมูล/เลขอ้างอิงตาม assertions ของเคส</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-049</td><td>Save Form Vat: ชนิดเอกสารผิด</td><td>เลือกใบขนที่ไม่ใช่ X0 → Save Form Vat</td><td>ระบบปฏิเสธ/แจ้งเตือนตามเงื่อนไขชนิดเอกสาร</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-050</td><td>ดาวน์โหลดโดยไม่เลือกรายการ</td><td>ล้าง checkbox → กดปุ่มดาวน์โหลดแต่ละปุ่ม</td><td>มีคำเตือนให้เลือกรายการ</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-051</td><td>ตั้งชื่อไฟล์ด้วย Job No</td><td>เลือกใบขน → ตั้งชื่อไฟล์ตาม Job No → Export</td><td>ชื่อไฟล์ตรง Job No ของรายการที่เลือก</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-060</td><td>Copy จาก List</td><td>สร้างใบขน → เลือกแถว → Copy → ค้น Job No</td><td>ได้ Ref ใหม่และข้อมูล Header ตรงต้นฉบับ</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-061</td><td>Copy โดยไม่เลือกแถว</td><td>ล้าง checkbox → กด Copy</td><td>แจ้งให้เลือกรายการ</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-062</td><td>Copy Decl Control</td><td>เปิดใบขน → Copy Decl Control → เปิดสำเนา</td><td>ได้ Ref ใหม่พร้อม Header; ไม่คัดลอก Invoice/Item</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-063</td><td>Copy New</td><td>เปิดใบขน → Copy New → กรอกจำนวนสำเนาตามเคส</td><td>ได้สำเนาหนึ่งใบตามจำนวนที่ตั้งและข้อมูลถูกคัดลอก</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ไม่ผ่าน"><td>IMPORT</td><td>TC-FUNC-064</td><td>Import XML เป็นใบขนใหม่</td><td>Export XML ของใบต้นทาง → Import Data.dat/XML</td><td>ได้ Ref ใหม่พร้อม Header/Invoice/Item ตรงต้นทาง</td><td class="fail">ไม่ผ่าน<small>TimeoutError: page.goto: Timeout 30000ms exceeded.</small></td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-065</td><td>Delete: Cancel และ OK</td><td>กด Delete → Cancel → ค้นซ้ำ → Delete/OK</td><td>Cancel คงใบขนไว้; OK ลบเฉพาะใบที่ชุดทดสอบสร้าง</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-066</td><td>Event View</td><td>สร้าง Header/Invoice/Item → เปิด Event</td><td>แสดงข้อมูล Header, Invoice และ Item ของใบขนนี้</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-067</td><td>ปฏิเสธ XML ไม่มี Invoice</td><td>เตรียม XML ไม่มี Invoice → Import</td><td>มีคำเตือนและไม่สร้างใบขนเสีย</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-068</td><td>Import DAT เป็นใบขนใหม่</td><td>Export DAT ของใบต้นทาง → Import Data.dat/XML</td><td>ได้ Ref ใหม่พร้อมข้อมูลต้นทาง</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-070</td><td>รายการรูปแบบ Export to</td><td>เปิดหน้า Export to → อ่านตัวเลือก</td><td>มีรูปแบบไฟล์ครบตามตัวเลือกที่สคริปต์ระบุ</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-071</td><td>Export to PDF</td><td>เลือก PDF → Export File</td><td>ได้ไฟล์ไม่ว่าง รูปแบบและข้อมูลใบขนตรงเกณฑ์ของเคส</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-072</td><td>Export to XML</td><td>เลือก XML → Export File</td><td>ได้ไฟล์ไม่ว่าง รูปแบบและข้อมูลใบขนตรงเกณฑ์ของเคส</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-073</td><td>Export to TIFF</td><td>เลือก TIFF → Export File</td><td>ได้ไฟล์ไม่ว่าง รูปแบบและข้อมูลใบขนตรงเกณฑ์ของเคส</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-074</td><td>Export to DAT</td><td>เลือก DAT → Export File</td><td>ได้ไฟล์ไม่ว่าง รูปแบบและข้อมูลใบขนตรงเกณฑ์ของเคส</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-075</td><td>Export to XLS Old</td><td>เลือก XLS Old → Export File</td><td>ได้ไฟล์ไม่ว่าง รูปแบบและข้อมูลใบขนตรงเกณฑ์ของเคส</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-076</td><td>Export to XLS New</td><td>เลือก XLS New → Export File</td><td>ได้ไฟล์ไม่ว่าง รูปแบบและข้อมูลใบขนตรงเกณฑ์ของเคส</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-077</td><td>Export to Invoice XLS</td><td>เลือก Invoice XLS → Export File</td><td>ได้ไฟล์ไม่ว่าง รูปแบบและข้อมูลใบขนตรงเกณฑ์ของเคส</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-078</td><td>Export to CSV</td><td>เลือก CSV → Export File</td><td>ได้ไฟล์ไม่ว่าง รูปแบบและข้อมูลใบขนตรงเกณฑ์ของเคส</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-079</td><td>รายการ Print Form</td><td>เปิด Print Form → อ่านตัวเลือก</td><td>มีแบบฟอร์มครบตามรายการที่เคสกำหนด</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-080</td><td>Print Form customPermitReport</td><td>เลือก customPermitReport → Print Form</td><td>เปิดหน้าต่างแบบฟอร์มตามที่เลือก</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-081</td><td>Print Form Insurance</td><td>เลือก Insurance → Print Form</td><td>เปิดหน้าต่างแบบฟอร์มตามที่เลือก</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-082</td><td>Print Form earlyReceive</td><td>เลือก earlyReceive → Print Form</td><td>เปิดหน้าต่างแบบฟอร์มตามที่เลือก</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-083</td><td>Print Form printExciseXLS</td><td>เลือก printExciseXLS → Print Form</td><td>เปิดหน้าต่างแบบฟอร์มตามที่เลือก</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-084</td><td>Print Form spiritImport</td><td>เลือก spiritImport → Print Form</td><td>เปิดหน้าต่างแบบฟอร์มตามที่เลือก</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-085</td><td>Print Form ใบขนปากระวาง</td><td>เลือก ใบขนปากระวาง → Print Form</td><td>ดาวน์โหลด PDF อ่านได้และตรวจข้อมูลใบขนตามเคส</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-086</td><td>Print Form ใบนำคีย์</td><td>เลือก ใบนำคีย์ → Print Form</td><td>ดาวน์โหลด PDF อ่านได้และตรวจข้อมูลใบขนตามเคส</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-087</td><td>Print Form แบบแสดงภาษีสุรา</td><td>เลือก แบบแสดงภาษีสุรา → Print Form</td><td>ดาวน์โหลด PDF อ่านได้และตรวจข้อมูลใบขนตามเคส</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-088</td><td>Print Form แบบแสดงภาษีสุรา New</td><td>เลือก แบบแสดงภาษีสุรา New → Print Form</td><td>ดาวน์โหลด PDF อ่านได้และตรวจข้อมูลใบขนตามเคส</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-089</td><td>Print Form ใบนำคีย์ Online</td><td>เลือก ใบนำคีย์ Online → Print Form</td><td>ดาวน์โหลด PDF อ่านได้และตรวจข้อมูลใบขนตามเคส</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-090</td><td>Print Form numkeyReport2</td><td>เลือก numkeyReport2 → Print Form</td><td>เปิดหน้าต่างแบบฟอร์มตามที่เลือก</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-091</td><td>ข้อความไทย Control/Invoice/Item</td><td>กรอกข้อความไทย → Save/เปิดซ้ำ → Export XML</td><td>ข้อความคงเดิมใน UI/XML ไม่กลายเป็น ? หรืออักขระเพี้ยน</td><td class="pass">ผ่าน</td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-120</td><td>Mapping และ Product controls</td><td>Add Invoice → เลือก Mapping ตามภาพ</td><td>มีช่องไฟล์, Preview Data, Import, checkbox 4 และ radio 2</td><td class="pass">ผ่าน<small>รัน local 30/10/2026 16:45:29 เวลาไทย</small></td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-121</td><td>แนบ CSV ต้นฉบับ</td><td>เลือก Import_01_Integer_All.csv</td><td>ชื่อไฟล์ถูกต้องและยังไม่สร้าง Invoice</td><td class="pass">ผ่าน<small>รัน local 30/10/2026 16:38:27 เวลาไทย</small></td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-122</td><td>Import โดยไม่มีไฟล์</td><td>เลือก Mapping → ไม่แนบไฟล์ → Import</td><td>มี dialog ใหม่แจ้งไฟล์; เปิดซ้ำมี 0 Invoice/Item</td><td class="pass">ผ่าน<small>รัน local 30/10/2026 16:39:25 เวลาไทย</small></td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-123</td><td>Preview CSV ก่อนบันทึก</td><td>แนบ CSV → Preview Data → เปิดใบซ้ำ</td><td>Preview มี Invoice/รหัสสินค้าทั้ง 5; ไม่มี PHP error/NaN/Infinity; ยังไม่มี Invoice/Item</td><td class="pass">ผ่าน<small>รัน local 30/10/2026 20:08:55 เวลาไทย</small></td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-124</td><td>Import CSV Mapping และตรวจข้อมูล</td><td>ปิด Master File → แนบ CSV → Import → เปิด Invoice/Item ทั้ง 5 ซ้ำ</td><td>success; 1 Invoice/5 Item; USD, Description/Origin และตัวเลข Quantity/Net Weight/Amount ตรง CSV</td><td class="pass">ผ่าน<small>รัน local 30/10/2026 19:46:24 เวลาไทย</small></td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-125</td><td>Master File และ Field Product</td><td>เลือก/ยกเลิกดึงข้อมูลจาก Master File</td><td>checkbox เปลี่ยนสถานะ; ปุ่มเลือก Field Product แสดงและ enabled; ยังไม่ตรวจ popup</td><td class="pass">ผ่าน<small>รัน local 30/10/2026 16:42:52 เวลาไทย</small></td></tr><tr data-module="IMPORT" data-result="ผ่าน"><td>IMPORT</td><td>TC-FUNC-126</td><td>ตัวเลือกบันทึก Product Master</td><td>เลือกบันทึก Product ใหม่ → Import/Export → สลับ Update/Skip → ยกเลิกบันทึก</td><td>Import/Export เลือกได้; Update/Skip เลือกได้ทีละตัว; ไม่กด Import เพื่อเขียน Master</td><td class="pass">ผ่าน<small>รัน local 30/10/2026 16:46:24 เวลาไทย</small></td></tr><tr data-module="IMPORT" data-result="ไม่ผ่าน"><td>IMPORT</td><td>OTHER-REPORT-IMPORT</td><td>Other Report ขาเข้า</td><td>เลือกแต่ละ Report → ค้น Arrival Date → ทดสอบทุกปุ่ม</td><td>รายงานมีข้อมูลและไม่มีหน้า PHP/DB error ตาม assertions</td><td class="fail">ไม่ผ่าน<small>บาง Report ต้องระบุคลังสินค้า 1/2; บาง Report ตอบ HTTP 500</small></td></tr><tr data-module="IMPORT" data-result="ไม่ผ่าน"><td>IMPORT</td><td>ZD-01-IM</td><td>Key in · เว้นว่างช่องตัวเลขที่ไม่บังคับ (DB ต้องใส่ 0 เอง) — ไม่มี label/tag 0 โผล่</td><td>Key in ตัวเลขไม่บังคับเป็นว่าง → Re-Avg/Calc Tax/Sum → ตรวจ XML/PDF</td><td>UI/คำนวณ/XML/PDF ไม่มีเลขขยะ NaN/INF; ยอด เงินบาท ภาษี ทศนิยมและการเฉลี่ยตรงกฎของ scenario</td><td class="fail">ไม่ผ่าน<small>คาด not &quot;0&quot; / ได้
+                    &quot;CustomsImportDeclaration/DocumentControl/BankInfo/TotalPaymentAmount=0&quot;; XML
+                    CustomsImportDeclaration/GoodsShipment/Detail/ProductInfo/CIFValue/Assess=0 — template เขียน
+                    &lt;Assess&gt; เสมอ (มีมาก่อน ALTER); XML
+                    CustomsImportDeclaration/GoodsShipment/Detail/DeductedAmount=0 — round((float)deductedAmount,2)
+                    ก่อนเช็ค → ส่ง 0 เสมอ (มีมาก่อน ALTER); XML
+                    CustomsImportDeclaration/GoodsShipment/Detail/Duty/Amount/Deposit=0 — อากรขาเข้า: guard `!= 0` ถูก
+                    comment ออก → เขียน &lt;Deposit&gt; เสมอ (มีมาก่อน ALTER)</small></td></tr><tr data-module="IMPORT" data-result="ไม่ผ่าน"><td>IMPORT</td><td>ZD-02-IM</td><td>Key in · ทศนิยม (3 ตำแหน่ง น้ำหนัก/ปริมาณ, 2 ตำแหน่ง เงิน) + เฉลี่ย charge ตามมูลค่า</td><td>Key in ทศนิยมและ charge ตามมูลค่า → Re-Avg/Calc Tax/Sum → ตรวจ XML/PDF</td><td>UI/คำนวณ/XML/PDF ไม่มีเลขขยะ NaN/INF; ยอด เงินบาท ภาษี ทศนิยมและการเฉลี่ยตรงกฎของ scenario</td><td class="fail">ไม่ผ่าน<small>รอบ 2 · item 0001 cifValueBaht เท่าเดิม: คาด &quot;44687.55&quot; / ได้
+                    &quot;44687.43&quot;; XML
+                    CustomsImportDeclaration/GoodsShipment/Detail/ProductInfo/CIFValue/Assess=0 — template เขียน
+                    &lt;Assess&gt; เสมอ (มีมาก่อน ALTER); XML
+                    CustomsImportDeclaration/GoodsShipment/Detail/DeductedAmount=0 — round((float)deductedAmount,2)
+                    ก่อนเช็ค → ส่ง 0 เสมอ (มีมาก่อน ALTER); XML
+                    CustomsImportDeclaration/GoodsShipment/Detail/Duty/Amount/Deposit=0 — อากรขาเข้า: guard `!= 0` ถูก
+                    comment ออก → เขียน &lt;Deposit&gt; เสมอ (มีมาก่อน ALTER)</small></td></tr><tr data-module="IMPORT" data-result="ไม่ผ่าน"><td>IMPORT</td><td>ZD-03-IM</td><td>Key in · ค่า 0 ทั้งชุด (มูลค่า/ปริมาณ/น้ำหนัก = 0) + เฉลี่ย charge → 0 หาร 0 ต้องไม่พัง</td><td>Key in มูลค่า/ปริมาณ/น้ำหนักทั้งหมด = 0 → Re-Avg/Calc Tax/Sum → ตรวจ XML/PDF</td><td>UI/คำนวณ/XML/PDF ไม่มีเลขขยะ NaN/INF; ยอด เงินบาท ภาษี ทศนิยมและการเฉลี่ยตรงกฎของ scenario</td><td class="fail">ไม่ผ่าน<small>item 0001 · invoiceQuantity: กรอก &quot;0&quot; — แสดง &quot;1&quot;: คาด 0 /
+                    ได้ 1; XML CustomsImportDeclaration/GoodsShipment/Detail/ProductInfo/CIFValue/Assess=0 — template
+                    เขียน &lt;Assess&gt; เสมอ (มีมาก่อน ALTER); XML
+                    CustomsImportDeclaration/GoodsShipment/Detail/DeductedAmount=0 — round((float)deductedAmount,2)
+                    ก่อนเช็ค → ส่ง 0 เสมอ (มีมาก่อน ALTER); XML
+                    CustomsImportDeclaration/GoodsShipment/Detail/Duty/Amount/Deposit=0 — อากรขาเข้า: guard `!= 0` ถูก
+                    comment ออก → เขียน &lt;Deposit&gt; เสมอ (มีมาก่อน ALTER)</small></td></tr><tr data-module="IMPORT" data-result="ไม่ผ่าน"><td>IMPORT</td><td>ZD-04-IM</td><td>Key in · ไม่มีอัตราแลกเปลี่ยน (exchange rate = 0) → Re-Avg/Calc Tax ต้องไม่หารด้วย 0</td><td>Key in แบบไม่มีอัตราแลกเปลี่ยน → Re-Avg/Calc Tax/Sum → ตรวจ XML/PDF</td><td>UI/คำนวณ/XML/PDF ไม่มีเลขขยะ NaN/INF; ยอด เงินบาท ภาษี ทศนิยมและการเฉลี่ยตรงกฎของ scenario</td><td class="fail">ไม่ผ่าน<small>คาด not &quot;0&quot; / ได้
+                    &quot;CustomsImportDeclaration/DocumentControl/BankInfo/TotalPaymentAmount=0&quot;;
+                    อัตราแลกเปลี่ยนของทุกรายการ = 0 (ไม่มี rate ของวันที่ใน header) — ตั้ง SPN_RATE_DATE เป็นวันที่ที่มี
+                    rate; XML CustomsImportDeclaration/GoodsShipment/Detail/ProductInfo/CIFValue/Assess=0 — template
+                    เขียน &lt;Assess&gt; เสมอ (มีมาก่อน ALTER); XML
+                    CustomsImportDeclaration/GoodsShipment/Detail/DeductedAmount=0 — round((float)deductedAmount,2)
+                    ก่อนเช็ค → ส่ง 0 เสมอ (มีมาก่อน ALTER); XML
+                    CustomsImportDeclaration/GoodsShipment/Detail/Duty/Amount/Deposit=0 — อากรขาเข้า: guard `!= 0` ถูก
+                    comment ออก → เขียน &lt;Deposit&gt; เสมอ (มีมาก่อน ALTER)</small></td></tr><tr data-module="IMPORT" data-result="ข้าม"><td>IMPORT</td><td>ZD-05-IM</td><td>Import CSV · คอลัมน์ตัวเลขที่ไม่บังคับเป็นค่าว่าง — ไม่มี label/tag 0 โผล่</td><td>Import CSV ตัวเลขไม่บังคับเป็นว่าง → Re-Avg/Calc Tax/Sum → ตรวจ XML/PDF</td><td>UI/คำนวณ/XML/PDF ไม่มีเลขขยะ NaN/INF; ยอด เงินบาท ภาษี ทศนิยมและการเฉลี่ยตรงกฎของ scenario</td><td class="skip">ข้าม<small>ไม่มี Mapping &quot;CUSDEC_TEST&quot; บน site นี้ — ตั้งชื่อ mapping ที่ใช้ใน
+                    .env SPN_CSV_MAPPING_IMPORT</small></td></tr><tr data-module="IMPORT" data-result="ข้าม"><td>IMPORT</td><td>ZD-06-IM</td><td>Import CSV · ทศนิยม + เฉลี่ย charge ตามมูลค่า</td><td>Import CSV ทศนิยมและ charge → Re-Avg/Calc Tax/Sum → ตรวจ XML/PDF</td><td>UI/คำนวณ/XML/PDF ไม่มีเลขขยะ NaN/INF; ยอด เงินบาท ภาษี ทศนิยมและการเฉลี่ยตรงกฎของ scenario</td><td class="skip">ข้าม<small>ไม่มี Mapping &quot;CUSDEC_TEST&quot; บน site นี้ — ตั้งชื่อ mapping ที่ใช้ใน
+                    .env SPN_CSV_MAPPING_IMPORT</small></td></tr><tr data-module="IMPORT" data-result="ข้าม"><td>IMPORT</td><td>ZD-07-IM</td><td>Import CSV · ใส่ &quot;0&quot; ทุกคอลัมน์ตัวเลข + เฉลี่ย charge ตามปริมาณ/น้ำหนัก → 0 หาร 0 ต้องไม่พัง</td><td>Import CSV ใส่ 0 ทุกตัวเลข → Re-Avg/Calc Tax/Sum → ตรวจ XML/PDF</td><td>UI/คำนวณ/XML/PDF ไม่มีเลขขยะ NaN/INF; ยอด เงินบาท ภาษี ทศนิยมและการเฉลี่ยตรงกฎของ scenario</td><td class="skip">ข้าม<small>ไม่มี Mapping &quot;CUSDEC_TEST&quot; บน site นี้ — ตั้งชื่อ mapping ที่ใช้ใน
+                    .env SPN_CSV_MAPPING_IMPORT</small></td></tr><tr data-module="IMPORT" data-result="ข้าม"><td>IMPORT</td><td>ZD-08-IM</td><td>Import CSV · ปริมาณตาม invoice ว่าง แต่มีราคาต่อหน่วย → Re-Avg ต้องได้ = มูลค่า ÷ ราคาต่อหน่วย</td><td>Import CSV เว้น Invoice Qty แต่มี Amount/Unit Price → Re-Avg/Calc Tax/Sum → ตรวจ XML/PDF</td><td>UI/คำนวณ/XML/PDF ไม่มีเลขขยะ NaN/INF; ยอด เงินบาท ภาษี ทศนิยมและการเฉลี่ยตรงกฎของ scenario; Invoice Qty
+                = Amount ÷ Unit Price</td><td class="skip">ข้าม<small>ไม่มี Mapping &quot;CUSDEC_TEST&quot; บน site นี้ — ตั้งชื่อ mapping ที่ใช้ใน
+                    .env SPN_CSV_MAPPING_IMPORT</small></td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-001</td><td>Export list exposes New, Search and the observed export buttons</td><td>เปิดรายการ ตรวจ F7 New, Search, Copy และปุ่มไฟล์ที่พบจริง</td><td>แสดง Export Declaration และปุ่ม Save XML/after short/with Decl No., PDF, TIFF, XLS, XLS New, Dat</td><td class="pass">ผ่าน<small>รันซ้ำหลัง debug 30/10/2026 10:32:33 เวลาไทย</small></td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-010</td><td>F7 New creates an empty draft with its own reference</td><td>F7 New → ตรวจ workspace → กลับรายการ → ค้น Ref</td><td>Ref ใหม่, Doc.Type=1, Job No. ว่าง, 0 Invoice/Item, เลขใบขนและ DECLSTATUS ว่าง, ยังมี Delete</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-011</td><td>กรอกและบันทึก Control</td><td>กรอก Exporter, เรือ, Voyage, MAWB/HAWB, ประเทศซื้อ/ปลายทาง, ท่าบรรทุก/ตรวจปล่อย, Package, น้ำหนัก,
+                Departure/Submit Date, Shipping Mark → Save → เปิดใหม่</td><td>ค่า Header และคอลัมน์ Export ตรงข้อมูลที่กรอก</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-012</td><td>exporter autocomplete loads master data and clears dependent fields</td><td>ค้น Exporter → เลือกรายการที่ Code ไม่ว่าง → Enter → ลบรหัส</td><td>ชื่อ/Tax/Branch เติมจาก master ที่เลือก และข้อมูลเกี่ยวข้องถูกล้างเมื่อลบรหัส</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-013</td><td>unknown destination country is rejected with an alert</td><td>กรอกรหัสประเทศปลายทางที่ไม่มีใน master แล้วออกจากช่อง</td><td>แจ้งว่าไม่พบหรือรหัสไม่ถูกต้อง ค่าที่พิมพ์อาจคงอยู่ในช่องให้แก้ไข ไม่บังคับว่าต้องล้างช่องอัตโนมัติ</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-014</td><td>แก้ไข Control</td><td>แก้ HAWB/MAWB/Gross Weight/Shipping Mark → Save → เปิดใหม่</td><td>ช่องที่แก้เปลี่ยนตามข้อมูลใหม่ ช่องอื่นคงเดิม</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-015</td><td>ขอเลขใบขน UAT</td><td>กรอก Job No = give me decl no → Re-Avg → ค้น Ref</td><td>มีเลขใบขน 14 ตัวและสถานะ ACCEPT</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-016</td><td>เปิดซ้ำหลัง ACCEPT</td><td>เตรียม ACCEPT → เปิด Ref เดิมซ้ำ</td><td>เลขใบขนและสถานะ ACCEPT คงเดิม</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-017</td><td>Job No ปกติคง Draft</td><td>กรอก Job No ปกติ → Save → เปิดซ้ำ</td><td>ยังเป็น Draft; ไม่ได้เลขใบขนจาก helper UAT</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-020</td><td>เพิ่ม Invoice</td><td>Add Invoice → เลือก Consignee และ Currency → Save</td><td>Invoice อยู่ใน tree และเปิด Item ของ Invoice ที่สร้างได้</td><td class="pass">ผ่าน<small>รันซ้ำหลัง debug 30/10/2026 11:40:05 เวลาไทย</small></td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-021</td><td>กรอก Item และคำนวณเงินบาท</td><td>เลือกพิกัด/Stat/Export Tariff ที่มีอยู่จริง กรอก Item และเงินต่างประเทศ → Save → เปิดใหม่</td><td>ค่า Item คงอยู่และเงินบาทตรง rate ที่ใช้ในการคำนวณ FOB</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-022</td><td>Copy/Add/Delete Item</td><td>Copy Item → เพิ่ม Item → ลบเฉพาะรายการที่สร้าง</td><td>ข้อมูลสำเนาตรงต้นฉบับ ลำดับ/จำนวน Item ตรงหลังแต่ละขั้น</td><td class="pass">ผ่าน<small>รันซ้ำหลัง debug 30/10/2026 11:41:47 เวลาไทย</small></td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-023</td><td>ลบ Invoice</td><td>ลบ Invoice จากรายการ Invoice และยืนยัน</td><td>Invoice และ Item ใต้ Invoice ที่ลบไม่อยู่ใน tree แล้ว</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-024</td><td>คำนวณภาษีและรวมยอด</td><td>Calculate Tax → Re-Avg → Sum Item to Inv.</td><td>ทุกขั้นมีข้อความสำเร็จ ไม่มี PHP/SQL error และผลรวมเป็น FOB ของขาออก</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-025</td><td>Validate identifies missing required fields for this Export item</td><td>Validate</td><td>ผลตรวจอ้างถึง Ref/Invoice/Item ที่สร้าง และระบุช่องที่ขาด ไม่ยกข้อความ error เฉพาะ Import มาใช้</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-026</td><td>Match Master File</td><td>Match Master File</td><td>แสดงตัวเลือกหรือผลจับคู่ตาม configuration ปัจจุบัน และไม่มี server error</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-027</td><td>เพิ่ม/ลบหมายเหตุ</td><td>เพิ่มหมายเหตุ/เปิดใหม่/ลบผ่านตัวควบคุมที่ Export รองรับ</td><td>ข้อความและตำแหน่งถูกเก็บและลบได้ ตรวจชื่อ option จริงก่อนทำ automation</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-028</td><td>Duty: หัวตาราง</td><td>เปิด Item → กดแว่นขยาย Duty</td><td>เห็นหัวตาราง Type/ภาษีปกติ/ภาษีที่ต้องชำระ/อัตราภาษี(%); ไม่บังคับแถวอากร</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-029</td><td>กุญแจปรับสถานะ Item</td><td>กดกุญแจ → แก้ Description → Save → ตอบ Cancel</td><td>Item เป็น INPROCESS และมี popup ยืนยันแก้รายการที่เตรียมเสร็จ</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-030</td><td>ค้น Reference No</td><td>กลับรายการ → ค้น Reference No.</td><td>มีแถวเดียวและ Reference ตรงใบที่สร้าง</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-031</td><td>ค้น Job No</td><td>ค้นจากเลขที่รับงาน</td><td>พบ Ref และ Job No. ที่สร้างตรงกัน</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-032</td><td>ค้น MAWB</td><td>ค้นจาก MAWB (`masterBillOfLading`)</td><td>พบ Ref/MAWB ตรงใบขนที่สร้าง</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-033</td><td>ค้น HAWB</td><td>ค้นจาก HAWB (`houseBillOfLading`)</td><td>พบ Ref/HAWB ตรงใบขนที่สร้าง</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-034</td><td>กรองสถานะ</td><td>เลือก Status Customs Accept → ค้น Ref</td><td>Ref เดิมยังพบและ DECLSTATUS=ACCEPT</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-035</td><td>ค้นช่วง Reference Date</td><td>กรอง Reference Date เป็นวันนี้</td><td>พบ Ref ที่สร้างและ CREATE DATE ตรงวันที่ในไทย</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-036</td><td>แบ่งหน้า List</td><td>ตั้ง 15 แถว → Next → Prev</td><td>ข้อมูลแต่ละหน้าถูกต้อง และย้อนกลับได้ชุดเดิม</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-037</td><td>เลือกทั้งหมด/ยกเลิกทั้งหมด</td><td>เลือก/ยกเลิก checkbox หัวตาราง</td><td>checkbox ของทุกแถวเปลี่ยนตาม</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-038</td><td>Saved Filter: ใบขนวันนี้</td><td>เลือก Filter Name ใบขนที่ทำในวันนี้ → Search</td><td>ตัวกรองคงค่าและพบ Ref วันนี้</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-039</td><td>search by assigned declaration number finds the same Export reference</td><td>ค้นจากเลขที่ใบขนฯ ด้วยเลขที่เพิ่งสร้าง</td><td>ได้ Ref เดิมและ Declaration No. ตรงกัน</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-040</td><td>Print จาก workspace</td><td>Print ใน workspace</td><td>ได้ PDF ใบขนขาออกที่ Ref ตรงและไม่มี server error</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-041</td><td>Print จาก List</td><td>Print จากไอคอนในรายการ → ตั้งค่าพิมพ์ → Start Print</td><td>ได้ PDF ที่ตรง Ref ที่เลือก</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-042</td><td>Save XML</td><td>เลือกแถว → Save XML</td><td>ได้ XML ขาออก (`CustomsExportDeclaration`), Ref และ Exporter/Invoice/Item ตรงกัน</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-043</td><td>Save XML with Decl No</td><td>เลือกแถว → Save XML with Decl No.</td><td>XML มี Ref และเลขใบขนที่ได้จากขั้น give me decl no ตรงกัน</td><td class="pass">ผ่าน<small>รันซ้ำหลัง debug 30/10/2026 10:29:48 เวลาไทย</small></td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-044</td><td>Save PDF</td><td>Save PDF</td><td>ได้ PDF ไม่ว่างและ Ref ตรง</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-045</td><td>Save TIFF</td><td>Save TIFF ตามชื่อปุ่มจริงของ Export</td><td>ได้ TIFF ที่เปิดอ่านได้และไม่มีหน้า error ปน</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-046</td><td>Save XLS</td><td>Save XLS</td><td>ได้ไฟล์ตารางที่เปิดอ่านได้และข้อมูลตรง Ref</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-047</td><td>Save XLS New</td><td>Save XLS New</td><td>ได้ไฟล์รูปแบบใหม่และข้อมูลตรง Ref</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-048</td><td>Save DAT</td><td>Save Dat</td><td>ได้ข้อมูล Ref/Invoice/Item ของ Export สำหรับทดสอบ round trip</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-049</td><td>Save XML after short contains the Short declaration data</td><td>Save XML after short</td><td>ได้ XML หลัง Short ที่ตรง Ref และข้อมูล Short ไม่ใช้ผลจากใบ A ที่ยังไม่มี Short</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ไม่ผ่าน"><td>EXPORT</td><td>TC-EXP-050</td><td>ดาวน์โหลดโดยไม่เลือกแถว</td><td>ล้าง checkbox → กด Save แต่ละชนิดใน List</td><td>มี dialog ใหม่และข้อความให้เลือกรายการตามแต่ละปุ่ม</td><td class="fail">ไม่ผ่าน<small>รันซ้ำหลัง debug 30/10/2026 10:30:03 เวลาไทย; Save XLS New ไม่มี selection
+                    alert เมื่อไม่เลือกแถว; handler เริ่ม AJAX โดยไม่มี countSel guard</small></td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-051</td><td>ตั้งชื่อไฟล์ด้วย Job No</td><td>เลือกชื่อไฟล์เป็น Job No. → Save XML</td><td>ชื่อไฟล์ตรง Job No. ของใบที่เลือก</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-060</td><td>Copy จาก List</td><td>เลือกแถว → Copy → ค้น Job No.</td><td>ได้ต้นฉบับ/สำเนา Ref ต่างกันและ Header ถูกคัดลอก</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-061</td><td>Copy โดยไม่เลือกแถว</td><td>กด Copy</td><td>แจ้งให้เลือก record และไม่มีสำเนาเกิดขึ้น</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-062</td><td>Copy Decl Control</td><td>Copy Decl Control และยืนยัน</td><td>Ref ใหม่ มีเฉพาะ Header ไม่มี Invoice/Item</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-063</td><td>Copy New copies the Export Header, Invoice and Items</td><td>Copy New โดยรองรับ count prompt ตาม configuration</td><td>Ref ใหม่และข้อมูล Header/Invoice/Item ครบ</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ไม่ผ่าน"><td>EXPORT</td><td>TC-EXP-064</td><td>Import XML เป็นใบขนใหม่</td><td>นำเข้า XML กลับจากหน้า Export list</td><td>ได้ใบขนขาออกใหม่ ข้อมูลเดิมครบ ไม่ตรวจด้วย schema Import</td><td class="fail">ไม่ผ่าน<small>รันซ้ำหลัง debug 30/10/2026 10:26:25 เวลาไทย; XML มี 1 Detail / 19 child
+                    fields แต่นำเข้าเป็น 19 Item: 1 จริง + 18 แถว 0000-0000</small></td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-065</td><td>Delete: Cancel และ OK</td><td>Delete → Cancel → Delete → Confirm</td><td>Cancel ยังอยู่ Confirm หาย และไม่ใช้เคสนี้กับ A ที่ไม่มี Delete</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-066</td><td>Event View</td><td>Event จากแถว Ref</td><td>Header/Invoice/Item ตรงข้อมูลที่สร้างตามรูปแบบ Event ของ Export</td><td class="pass">ผ่าน<small>รันซ้ำหลัง debug 30/10/2026 10:27:34 เวลาไทย</small></td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-067</td><td>ปฏิเสธ XML ไม่มี Invoice</td><td>นำเข้า XML ที่ไม่มี Invoice → ค้นผล</td><td>มีคำเตือนข้อมูลไม่ครบและไม่สร้าง Export เสีย</td><td class="pass">ผ่าน<small>รันซ้ำหลัง debug 30/10/2026 10:28:06 เวลาไทย</small></td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-068</td><td>Import DAT เป็นใบขนใหม่</td><td>นำเข้า DAT กลับจากหน้า Export list</td><td>ได้ Ref ใหม่และ Header/Invoice/Item ตรงต้นฉบับ</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-071</td><td>Cancel Export</td><td>สร้างใบใหม่เป็น ACCEPT → Cancel → เลือก REVISED/กรอกเหตุผล → Send Cancel</td><td>มี popup ยกเลิก; หลังส่ง HTTP 200 และสถานะ SEND_CANCEL เลขใบขนเดิมคงอยู่</td><td class="pass">ผ่าน<small>รันซ้ำหลัง debug 30/10/2026 11:56:18 เวลาไทย; SEND_CANCEL; เลขใบขนคงเดิม; Ref
+                    HQVM200002178</small></td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-080</td><td>complete Control, Invoice and Detail then Create GCL and verify persisted copied data</td><td>กรอกและเปิดตรวจสามส่วน รวม Item Package/Gross Weight → give me decl no/Re-Avg → Create GCL 1 →
+                เปิดลิงก์/เทียบข้อมูล/reload</td><td>GCL ใหม่ 1 ใบ ข้อมูลเชื่อมโยงและค่าที่คัดลอกตรงต้นฉบับ 10 PK/120 KGM และคงอยู่หลัง reload ไม่มี
+                JS/server error</td><td class="pass">ผ่าน<small>รันซ้ำหลัง debug 30/10/2026 10:24:32 เวลาไทย</small></td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-081</td><td>air transport mode 4 exposes Create Short, Print Air GCL and Print Change Flight after ACCEPT</td><td>เลือก 4 = ทางเครื่องบิน → Save/เปิดใหม่ → give me decl no/Re-Avg → ตรวจ ACCEPT → ตรวจปุ่ม Create Short,
+                Print Air GCL, Print Change Flight → reload</td><td>Mode 4 คงอยู่ ทั้งสามปุ่มแสดงอย่างละหนึ่งปุ่มและ enabled ก่อน/หลัง reload ไม่มี JS/server error
+                ไม่กดปุ่ม</td><td class="pass">ผ่าน<small>รันซ้ำหลัง debug 30/10/2026 10:17:13 เวลาไทย</small></td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-082</td><td>Create Short shows confirmation/success popups and copies source Export data</td><td>Create Short → ตรวจ confirm/ยืนยัน → ตรวจ alert สำเร็จ → เปิดลิงก์ Short → เทียบข้อมูล Short Control →
+                reload เทียบซ้ำ</td><td>Short ใหม่ 1 ใบ, popup ทั้งสองข้อความ, Export Reference/Decl/Job/Tax/Branch/Package/Gross/Net
+                ตรงต้นฉบับและคงอยู่หลัง reload ไม่มี JS/server error; บันทึก Broker defaults และจำนวน Short Detail
+                เป็นข้อสังเกต ไม่เพิ่ม Short Item</td><td class="pass">ผ่าน<small>รันซ้ำหลัง debug 30/10/2026 10:20:03 เวลาไทย</small></td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-091</td><td>ข้อความไทย Control/Invoice/Item</td><td>กรอกไทยทั้งสามส่วน → Save/เปิดซ้ำ → อ่าน XML ที่ Export</td><td>ข้อความใน UI และ XML ตรงต้นฉบับทั้งสี่ค่าที่เคสระบุ</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-100</td><td>Send: Export to PDF</td><td>เปิดหน้า Send → เลือก PDF → Export File</td><td>ได้ไฟล์ดาวน์โหลดจริงและไม่ว่าง; ไม่ตรวจเนื้อหาทุก field</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-101</td><td>Send: Export to XML</td><td>เปิดหน้า Send → เลือก XML → Export File</td><td>ได้ไฟล์ดาวน์โหลดจริงและไม่ว่าง; ไม่ตรวจเนื้อหาทุก field</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-102</td><td>Send: Export to Tiff</td><td>เปิดหน้า Send → เลือก Tiff → Export File</td><td>ได้ไฟล์ดาวน์โหลดจริงและไม่ว่าง; ไม่ตรวจเนื้อหาทุก field</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-103</td><td>Send: Export to Data</td><td>เปิดหน้า Send → เลือก Data → Export File</td><td>ได้ไฟล์ดาวน์โหลดจริงและไม่ว่าง; ไม่ตรวจเนื้อหาทุก field</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-104</td><td>Send: Export to XLS Old</td><td>เปิดหน้า Send → เลือก XLS Old → Export File</td><td>ได้ไฟล์ดาวน์โหลดจริงและไม่ว่าง; ไม่ตรวจเนื้อหาทุก field</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-105</td><td>Send: Export to XLS New</td><td>เปิดหน้า Send → เลือก XLS New → Export File</td><td>ได้ไฟล์ดาวน์โหลดจริงและไม่ว่าง; ไม่ตรวจเนื้อหาทุก field</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-106</td><td>Send: Export to Invoice XLS</td><td>เปิดหน้า Send → เลือก Invoice XLS → Export File</td><td>ได้ไฟล์ดาวน์โหลดจริงและไม่ว่าง; ไม่ตรวจเนื้อหาทุก field</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-107</td><td>Send: Export to CSV</td><td>เปิดหน้า Send → เลือก CSV → Export File</td><td>ได้ไฟล์ดาวน์โหลดจริงและไม่ว่าง; ไม่ตรวจเนื้อหาทุก field</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-108</td><td>Send: ใบแนบ 19 ทวิ</td><td>เปิดหน้า Send → เลือก ใบแนบ 19 ทวิ → Print Form</td><td>มีหน้าต่าง popup เปิดจริง</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-109</td><td>Send: ใบนำคีย์</td><td>เปิดหน้า Send → เลือก ใบนำคีย์ → Print Form</td><td>มีหน้าต่าง popup เปิดจริง</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-110</td><td>Send: ใบนำคีย์ Online</td><td>เปิดหน้า Send → เลือก ใบนำคีย์ Online → Print Form</td><td>ได้ไฟล์ดาวน์โหลดจริงและไม่ว่าง</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-111</td><td>Send: ใบนำคีย์ HTML</td><td>เปิดหน้า Send → เลือก ใบนำคีย์ HTML → Print Form</td><td>มีหน้าต่าง popup เปิดจริง</td><td class="pass">ผ่าน</td></tr><tr data-module="EXPORT" data-result="ผ่าน"><td>EXPORT</td><td>TC-EXP-112</td><td>Send: ขอรับเงินชดเชยค่าภาษีอากร</td><td>เปิดหน้า Send → เลือก ขอรับเงินชดเชยค่าภาษีอากร → Print Form</td><td>ได้ไฟล์ดาวน์โหลดจริงและไม่ว่าง</td><td class="pass">ผ่าน</td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-001</td><td>เข้า VIEW GCL</td><td>Home → VIEW GCL</td><td>เปิด Goods Transition List ได้</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 13:04:42 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-002</td><td>โครงสร้างรายการ</td><td>เปิด List → อ่านหัวตารางและ toolbar</td><td>มี 10 คอลัมน์และปุ่มตามรายการที่ source ระบุ</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 13:04:44 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-003</td><td>ค้น Ref แยก GCL No</td><td>ค้น Ref → ล้าง → ค้น GCL No ของใบเดิม</td><td>ทั้งสองการค้นหาพบ Ref เป้าหมายเดียวกัน</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 13:04:56 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-004</td><td>Keyword ตาม By</td><td>เลือก By/คำค้นตามแต่ละ field ของ fixture → Search</td><td>ผลค้นตรงชนิดข้อมูลและ Ref ที่รู้ค่าจริง</td><td class="pass">ผ่าน<small>รันซ้ำหลัง debug 30/10/2026 15:18:47 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-005</td><td>กรอง Status</td><td>เลือก Status ACCEPT/SEND/Draft → Search</td><td>รหัสสถานะทุกแถวตรงตัวกรอง</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 13:09:21 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-006</td><td>Date Type/ช่วงวันที่</td><td>ค้น Departure Date ที่รู้ค่า → ตรวจ F2</td><td>ผลตรงวันเป้าหมายและมีปุ่มปฏิทิน F2</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 13:09:24 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-007</td><td>เจ้าของ/ทำวันนี้</td><td>สร้าง Draft → เลือก filter ของตนเอง/วันนี้</td><td>ยังพบ Draft ที่สร้างในรอบนี้</td><td class="pass">ผ่าน<small>รันซ้ำหลัง debug 30/10/2026 15:19:54 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-008</td><td>จำนวนแถว</td><td>เลือก page size 15/30/50/100/200 → Search</td><td>จำนวนแถวไม่เกินขนาดหน้าและ Ref ไม่ซ้ำ</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 13:12:34 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-009</td><td>Next/Prev</td><td>เก็บ Ref หน้าแรก → Next → Prev</td><td>Next เปลี่ยนข้อมูล; Prev กลับชุด Ref เดิม</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 13:12:36 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-010</td><td>Checkbox รายแถว/ทั้งหมด</td><td>checkall → ยกเลิก checkall → เลือกแถว</td><td>checkbox แถวที่มองเห็นเปลี่ยนตรงการเลือก</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 13:12:38 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-011</td><td>ไม่พบข้อมูล/ล้างตัวกรอง</td><td>ค้น Ref ที่ไม่มี → ล้างเงื่อนไข → Search</td><td>ผลว่างไม่ค้างแถวเก่า; reset แล้วมีรายการ</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 13:12:40 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-012</td><td>ค้นภาษาไทย/อักขระพิเศษ</td><td>ค้นข้อความไทย/quote/อักขระพิเศษ</td><td>ไม่ค้างข้อมูลเก่าและไม่มี SQL/PHP error ตามเกณฑ์</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 13:12:47 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-020</td><td>F7 และ 3 ทางสร้าง</td><td>เปิด F7 wizard → ตรวจสามทางเลือก → Back</td><td>มี Declaration/New/CSV; ค่าเริ่มต้นถูกและยังไม่มี Ref จองไว้</td><td class="pass">ผ่าน</td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-021</td><td>สร้างจาก Export 1 ใบ</td><td>เลือก Export หนึ่งใบ → สร้าง GCL → เปิดซ้ำ</td><td>Source/เลขใบขน/จำนวน Package ตรงต้นทางและ Detail คงเดิม</td><td class="pass">ผ่าน<small>รันซ้ำหลัง debug 30/10/2026 11:35:49 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-022</td><td>สร้างจากหลาย Export</td><td>เลือก Export สองใบ → สร้าง GCL → เปิดซ้ำ</td><td>แต่ละ Detail ผูก Source/เลขใบขนถูกใบ</td><td class="pass">ผ่าน<small>รันซ้ำหลัง debug 30/10/2026 11:38:24 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-023</td><td>ยืนยันโดยไม่เลือก Export</td><td>ไม่เลือก Export → Create</td><td>มี guard และไม่เข้า workspace ของ GCL ใหม่</td><td class="pass">ผ่าน</td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-024</td><td>New GCL ขาดข้อมูล</td><td>New GCL → เว้นข้อมูลจำเป็น → Save</td><td>ถ้าเข้า Draft ต้องไม่แสดง Customs Accept; ถ้าไม่เข้า workspace ต้องมี guard ตาม branch ที่เกิดขึ้น</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 13:13:41 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-025</td><td>New GCL จาก lookup และ Save ภายหลัง</td><td>New GCL → % เลือกแถวแรก/เว้นว่าง → Save → เปิดซ้ำ</td><td>ได้ Ref ใหม่และข้อมูลส่วนบนตรง snapshot ที่บันทึก</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 13:14:05 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-026</td><td>สลับทางสร้าง/Back</td><td>เปิด New → กรอก UNSAVED → สลับกลับ Declaration/Back</td><td>กลับ wizard/List ได้ และ URL ยังไม่มี gtcid ของเอกสาร</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 13:14:07 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-027</td><td>UI สร้างผ่าน CSV</td><td>F7 → เลือก Upload CSV</td><td>แสดงหน้าฟอร์ม Upload CSV</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 14:55:05 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-028</td><td>ค้น source Export</td><td>กรอก Ref และโหมดขนส่งจริงของ Export → ค้น source</td><td>พบหนึ่งแถวที่ Ref/เลขใบขนตรงต้นทาง</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 13:14:15 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-029</td><td>Export → Create GCL</td><td>สร้าง Export พร้อมข้อมูล/ACCEPT → Create GCL</td><td>Ref ต้นทาง เลขใบขน Package และ Gross ถูก map มา</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 13:18:38 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-040</td><td>เลือกบริษัทจาก master</td><td>New GCL → พิมพ์ % ใน Company → เลือกแถวแรก</td><td>รหัสที่ commit ตรงแถวแรกจริง</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 13:18:41 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-041</td><td>Info บริษัท</td><td>เลือก Company → กด Info แสดง/ซ่อน</td><td>ชื่อ master ไม่ว่าง; แสดงแล้วซ่อนรายละเอียดได้</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 13:18:44 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-042</td><td>ล้าง/เปลี่ยนบริษัท</td><td>เลือก Company → ล้างรหัส → ค้นและเลือกใหม่</td><td>ล้างได้และเลือก master เดิมกลับมาได้ถูกต้อง</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 13:18:47 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-043</td><td>Save Control ครบ</td><td>เตรียม GCL → บันทึก Control/Job → เปิดซ้ำ/ดู List</td><td>snapshot ส่วนบนและ Job No ใน List ตรงที่บันทึก</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 13:22:40 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-044</td><td>Transport แต่ละทาง</td><td>เลือก Transport Mode 1/3/4 ทีละค่า → Save/เปิดซ้ำ</td><td>แต่ละโหมดเก็บ code ที่เลือกถูกต้อง</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 13:26:21 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-045</td><td>Departure Date/F2</td><td>กด F2 → เลือกวันที่ 15 → Save/เปิดซ้ำ</td><td>วันที่จากปฏิทินถูกบันทึกตรงค่า</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 13:28:47 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-046</td><td>Master code ไม่พบ</td><td>กรอก releasePort = ZZZZ → ยืนยันช่อง</td><td>มี feedback ว่ารหัสไม่ถูกต้อง; ไม่เอารหัสอื่นมาแทน</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 13:28:49 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-047</td><td>รถและรถพ่วง</td><td>กรอกทะเบียน QA001/QA002 และ lookup รถ/พ่วง → Save/เปิดซ้ำ</td><td>ค่าของรถหลักและพ่วงแยกช่องและตรง snapshot</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 13:33:16 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-048</td><td>GPS/Authorizer/หมายเหตุ</td><td>กรอก GPS/ผู้มอบอำนาจ/หมายเหตุส่งและไม่ส่ง → Save/เปิดซ้ำ</td><td>ทั้งสี่ข้อมูลคงอยู่แยกช่อง</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 13:35:36 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-049</td><td>ภาษาไทยและอักขระใน Control</td><td>กรอก remarkGCL เป็นไทยและเครื่องหมาย → Save/เปิดซ้ำ</td><td>ข้อความตรงต้นฉบับ</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 13:37:57 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-050</td><td>schema 2016</td><td>เปิด New → ตรวจ schema 2016 → เปิด GCL ที่บันทึก</td><td>schema 2016 ถูกเลือกเป็นค่าเริ่มต้นและยังคงอยู่</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 13:40:12 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-051</td><td>แก้ Control บางช่อง</td><td>แก้เฉพาะบางช่อง Control → Save/เปิดซ้ำ</td><td>ช่องที่แก้เปลี่ยน; Detail ที่เชื่อมอยู่ไม่เปลี่ยน</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 13:42:37 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-060</td><td>บรรจุตู้ indicator=1</td><td>เลือก containerIndicator = 1</td><td>กลุ่มเจ้าของตู้ Booking และ VGM แสดง</td><td class="pass">ผ่าน<small>รันซ้ำหลัง debug 30/10/2026 11:09:04 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-061</td><td>ไม่บรรจุตู้ indicator=0</td><td>เลือก containerIndicator = 0 → Save/เปิดซ้ำ</td><td>ค่า 0 ถูกเก็บเป็นรหัสจริงของ no-container</td><td class="pass">ผ่าน<small>รันซ้ำหลัง debug 30/10/2026 11:11:16 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-062</td><td>Container Status</td><td>เลือก No Container/Full/FCL/LCL/MTY → Save/เปิดซ้ำ</td><td>แต่ละสถานะเก็บ code ตรงค่าที่เลือก</td><td class="pass">ผ่าน<small>รันซ้ำหลัง debug 30/10/2026 11:16:06 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-063</td><td>Container No/Type และตัวช่วย</td><td>เลือกชนิดตู้แถวแรก/กรอกเลขตู้ถูกต้อง → Save/เปิดซ้ำ</td><td>เลขตู้และชนิดตู้ตรงที่กรอก/เลือก</td><td class="pass">ผ่าน<small>รันซ้ำหลัง debug 30/10/2026 11:18:24 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-064</td><td>Reefer N/Y</td><td>เลือก Reefer N และ Y → Save/เปิดซ้ำ</td><td>รหัส N/Y และการแสดงช่องอุณหภูมิตรงเกณฑ์ในเคส</td><td class="pass">ผ่าน<small>รันซ้ำหลัง debug 30/10/2026 11:21:20 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-065</td><td>อุณหภูมิ/ระบายอากาศ/ขนาดเกิน</td><td>กรอกอุณหภูมิ/ระบายอากาศ/ขนาดเกิน → Save/เปิดซ้ำ</td><td>ค่าที่กรอกคงเดิมในแต่ละช่อง</td><td class="pass">ผ่าน<small>รันซ้ำหลัง debug 30/10/2026 11:23:30 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-066</td><td>Size of Container Info</td><td>กด Size Info → อ่านขนาด → กลับ</td><td>แสดงข้อมูลขนาดอ่านได้และ Control ไม่เปลี่ยน</td><td class="pass">ผ่าน</td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-067</td><td>Cal VGM</td><td>เตรียมตู้ → Cal VGM สองรอบ</td><td>VGM ตรง oracle ที่กำหนด และรอบสองไม่เปลี่ยนค่า</td><td class="pass">ผ่าน<small>รันซ้ำหลัง debug 30/10/2026 11:25:48 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-068</td><td>Dangerous goods</td><td>เลือก Dangerous → กรอก UNDG/IMO → Save/เปิดซ้ำ</td><td>ช่อง Dangerous แสดงและค่าที่กรอกคงอยู่</td><td class="pass">ผ่าน<small>รันซ้ำหลัง debug 30/10/2026 11:27:56 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-069</td><td>เปลี่ยน Dangerous เป็น General</td><td>เลือก General Cargo → Save/เปิดซ้ำ</td><td>ช่อง Dangerous ซ่อนและรหัส Cargo คงอยู่</td><td class="pass">ผ่าน<small>รันซ้ำหลัง debug 30/10/2026 11:30:11 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-070</td><td>Cargo Type7</td><td>เลือก fresh/perishable Cargo code 7 → Save/เปิดซ้ำ</td><td>Cargo code 7 คงอยู่</td><td class="pass">ผ่าน<small>รันซ้ำหลัง debug 30/10/2026 11:32:18 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-071</td><td>Seal/Booking/เจ้าของตู้</td><td>กรอก Seal/Booking/Container Operator → Save/เปิดซ้ำ</td><td>ค่าแต่ละช่องแยกกันและตรงค่ากรอก</td><td class="pass">ผ่าน<small>รันซ้ำหลัง debug 30/10/2026 11:34:39 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-080</td><td>หน้า Add Detail/ค้น Export</td><td>Add Detail → ค้น Export เป้าหมาย → Back</td><td>ค้น source ถูกต้องและ GCL เดิมไม่เปลี่ยน</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 13:46:04 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-081</td><td>เพิ่ม source 1 ใบ</td><td>Add Detail → เลือก source หนึ่งใบ → เพิ่ม</td><td>Source Ref และเลขใบขนใน Detail ตรงต้นทาง</td><td class="pass">ผ่าน<small>รัน local 30/10/2026 20:24:22 เวลาไทย; ; HQVM400001914</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-082</td><td>เพิ่ม source หลายใบ</td><td>Add Detail → เลือกสอง source → เพิ่ม</td><td>แต่ละ Detail เชื่อมกับ source ถูกใบ</td><td class="pass">ผ่าน<small>รัน local 30/10/2026 20:45:25 เวลาไทย; ; HQVM400001922</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-083</td><td>เพิ่มโดยไม่เลือก source</td><td>Add Detail → ไม่เลือกแถว → Add</td><td>จำนวน Detail ไม่เปลี่ยน</td><td class="pass">ผ่าน<small>รัน local 30/10/2026 20:28:17 เวลาไทย; ; HQVM400001916</small></td></tr><tr data-module="GCL" data-result="ข้าม"><td>GCL</td><td>TC-GCL-084</td><td>เพิ่ม Export ที่มีอยู่แล้ว</td><td>เพิ่ม source เดิมซ้ำตาม fixture ที่ตั้ง</td><td>จำนวนแถวหลังเพิ่มซ้ำตรง expected count ที่กำหนด</td><td class="skip">ข้าม<small>รันต่อ 30/10/2026 13:55:51 เวลาไทย; Duplicate/partial-shipment policy not
+                    confirmed; configure SPN_GCL_DUPLICATE_ROWS</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-085</td><td>New Row จำนวนที่ถูกต้อง</td><td>New Row จำนวน 1 แล้ว 2</td><td>จำนวนแถวเพิ่มตรงจำนวนที่ขอ</td><td class="pass">ผ่าน<small>รันซ้ำหลัง debug 30/10/2026 15:11:11 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ข้าม"><td>GCL</td><td>TC-GCL-086</td><td>New Row จำนวนไม่ถูกต้อง</td><td>กรอก New Row เป็นว่าง/0/-1/abc → เพิ่ม → เปิดซ้ำ</td><td>maxlength = 4 และทุกค่าที่ไม่ถูกต้องต้องไม่เพิ่มแถว</td><td class="skip">ข้าม<small>ปิดใช้งาน: ค่า abc ใน New Row เคยเพิ่มจาก1เป็น75แถวและ cleanup ไม่สำเร็จ เคสถูก skip ก่อนเข้า fixture/หน้าเว็บ ไม่มีการรัน malformed count ซ้ำ สถานะนี้ไม่ใช่ PASS</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-087</td><td>แก้รายละเอียดแถว</td><td>แก้ Description/BL/Invoice/Note → Save/เปิดซ้ำ</td><td>ข้อความคงอยู่และ Source/เลขใบขนเดิมไม่เปลี่ยน</td><td class="pass">ผ่าน<small>รันซ้ำหลัง debug 30/10/2026 15:12:22 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-088</td><td>Item No และลำดับ</td><td>เปลี่ยน Item No → Save/เปิดซ้ำ</td><td>เลขรายการเปลี่ยนโดย mapping กับ source คงถูกต้อง</td><td class="pass">ผ่าน<small>รันซ้ำหลัง debug 30/10/2026 15:14:32 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-089</td><td>Delete Detail ไม่เลือกแถว</td><td>ไม่เลือก Detail → Delete</td><td>แถวเดิมไม่ถูกลบ</td><td class="pass">ผ่าน<small>รันซ้ำหลัง debug 30/10/2026 15:15:02 เวลาไทย; No-selection Delete submitted 1
+                    request(s); persisted rows unchanged; No-selection guard leaves data intact without a native
+                    alert</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-090</td><td>Delete Detail Cancel/Confirm</td><td>เลือก Detail → Delete/Cancel → Delete/Confirm</td><td>Cancel คงข้อมูล; Confirm ลบเฉพาะแถวที่เลือก</td><td class="pass">ผ่าน<small>รันซ้ำหลัง debug 30/10/2026 15:15:52 เวลาไทย; Detail Delete has no confirmation
+                    dialog; Cancel branch does not apply</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-091</td><td>Back จาก Add Detail</td><td>เปิด Add Detail → กลับโดยไม่เพิ่ม</td><td>Header และ Detail เดิมคงเดิม</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 14:24:55 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-100</td><td>Footer รวมหลาย Detail</td><td>เตรียม Detail หน่วยเดียวกัน → อ่านยอด footer</td><td>Package/Gross footer เท่าผลรวมค่าจริงของแถว</td><td class="pass">ผ่าน<small>รันซ้ำหลัง debug 30/10/2026 15:17:33 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-101</td><td>Tree กับตารางตรงกัน</td><td>เทียบ source tree กับ Detail</td><td>ตัวตนต้นทางและจำนวน/น้ำหนักตรงกัน</td><td class="pass">ผ่าน<small>รัน local 30/10/2026 20:34:44 เวลาไทย; ; HQVM400001918</small></td></tr><tr data-module="GCL" data-result="ข้าม"><td>GCL</td><td>TC-GCL-102</td><td>ปรับสัดส่วนตาม Package</td><td>แก้ Package ตาม fixture → Save/เปิดซ้ำ</td><td>Gross ตรงค่าคาดหวังที่ระบุใน oracle</td><td class="skip">ข้าม<small>รันต่อ 30/10/2026 14:35:22 เวลาไทย; Proportion/rounding oracle not confirmed;
+                    set SPN_GCL_PROPORTION_GROSS for package=5</small></td></tr><tr data-module="GCL" data-result="ข้าม"><td>GCL</td><td>TC-GCL-103</td><td>สัดส่วนเมื่อหารด้วยศูนย์</td><td>ใช้ source ที่ Planned Package เป็น 0 → ทดสอบ Detail</td><td>ไม่เกิด NaN/Infinity จากกรณีจำนวนต้นทาง 0</td><td class="skip">ข้าม<small>รันต่อ 30/10/2026 14:35:23 เวลาไทย; Need an explicitly supplied owned
+                    zero-package Export fixture; existing user sources are not allocated</small></td></tr><tr data-module="GCL" data-result="ไม่ผ่าน"><td>GCL</td><td>TC-GCL-104</td><td>ขอบเขต Package/Gross</td><td>กรอก Package/Gross เป็น -1 และ abc → Save/เปิดซ้ำ</td><td>maxlength 8/15; ไม่เก็บค่าลบ/ตัวอักษรและค่าตัวเลขต้อง ≥ 0</td><td class="fail">ไม่ผ่าน<small>รัน local 30/10/2026 20:38:41 เวลาไทย; บันทึกค่า -1 แล้ว Package ยังคง -1 และ Gross Weight ยังคง -1.000; abc ถูกแปลงเป็น0/0.000; ทดสอบครบ4กรณีและคืนค่าเดิมแล้ว เกณฑ์ไม่ให้ติดลบยังไม่ผ่าน; HQVM400001919; realPackage: submitted -1; persisted -1; realPackage: submitted abc; persisted 0; realGrossWeight: submitted -1; persisted -1.000; realGrossWeight: submitted abc; persisted 0.000</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-105</td><td>ข้อความและ BL length</td><td>กรอกไทย/comma/newline และ BL ยาว 35 ตัว → Save/เปิดซ้ำ</td><td>ข้อความและ BL คงตรงค่าที่กรอก</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 14:40:39 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ข้าม"><td>GCL</td><td>TC-GCL-106</td><td>หน่วยต่างกัน</td><td>เตรียม Detail ต่างหน่วยตาม fixture → อ่าน footer</td><td>ยอด footer ตรง oracle ที่กำหนด</td><td class="skip">ข้าม<small>รันต่อ 30/10/2026 14:40:40 เวลาไทย; Need mixed-unit source references and
+                    confirmed aggregation oracle</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-107</td><td>ไม่แก้ Export ต้นทาง</td><td>แก้น้ำหนักจริงใน GCL → เปิด Export ต้นทาง</td><td>Header ของ Export ต้นทางไม่เปลี่ยน</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 14:42:01 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-120</td><td>Validate Draft</td><td>สร้าง GCL ของชุดทดสอบ → Validate</td><td>มี popup เปิด; ไม่ตรวจผล/error ภายใน</td><td class="pass">ผ่าน<small>รันซ้ำหลัง debug 30/10/2026 10:36:47 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-121</td><td>Validate Ref HQVM400001676</td><td>ค้น HQVM400001676 → เปิด → Validate</td><td>มี popup เปิด; ไม่ตรวจผล/error ภายใน</td><td class="pass">ผ่าน<small>รันซ้ำหลัง debug 30/10/2026 10:37:05 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-122</td><td>Copy จาก List</td><td>เลือกแถว GCL → Copy → ค้น/เปิดสำเนา</td><td>ได้ Ref ใหม่และ Header mapping ที่สคริปต์เทียบถูกต้อง</td><td class="pass">ผ่าน<small>รันซ้ำหลัง debug 30/10/2026 12:04:50 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-123</td><td>Copy GCL Control หลายใบ</td><td>Copy GCL Control จำนวน 2 → เปิดสำเนา</td><td>ได้สอง Ref ใหม่พร้อม Control และ Detail ตรงต้นฉบับ</td><td class="pass">ผ่าน<small>รันซ้ำหลัง debug 30/10/2026 11:47:45 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-124</td><td>Copy toolbar และ Cancel</td><td>เปิด GCL → toolbar Copy → เปิดสำเนา</td><td>ได้ Ref ของสำเนาใหม่; Detail ต้นฉบับไม่เปลี่ยน</td><td class="pass">ผ่าน<small>รันซ้ำหลัง debug 30/10/2026 11:52:49 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-125</td><td>Copy ไม่เลือกแถว</td><td>ล้างการเลือกใน List → Copy</td><td>มีคำเตือนและไม่สร้างสำเนา</td><td class="pass">ผ่าน</td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-126</td><td>CRUD หมายเหตุ footer</td><td>เพิ่ม footer note → Save/เปิดซ้ำ → แก้ → ลบ</td><td>บันทึก/แก้ไข/ลบ note ได้ตรงข้อความที่ใช้ทดสอบ</td><td class="pass">ผ่าน<small>รันซ้ำหลัง debug 30/10/2026 10:57:04 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-127</td><td>Datatype Extra note</td><td>เพิ่ม note ทั้งสี่ Datatype → เปิดซ้ำ</td><td>ข้อความและชนิด note คงถูกคู่กัน</td><td class="pass">ผ่าน<small>รันซ้ำหลัง debug 30/10/2026 10:59:09 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-128</td><td>Toolbar ตามสถานะ</td><td>เปิด Draft/SEND/ACCEPT ตาม fixture → อ่าน toolbar</td><td>ปุ่มตรงรายการที่สคริปต์คาดสำหรับแต่ละสถานะ</td><td class="pass">ผ่าน<small>รันซ้ำหลัง debug 30/10/2026 11:01:56 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-129</td><td>Delete Draft</td><td>Delete Draft ของรอบนี้ → Cancel → Confirm → ค้น Ref</td><td>Cancel ยังพบ Draft; Confirm ไม่พบ Ref เดิม</td><td class="pass">ผ่าน<small>รันซ้ำหลัง debug 30/10/2026 11:04:50 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-140</td><td>Save XML ใบเดียว</td><td>เลือก GCL หนึ่งใบ → Save XML → อ่านไฟล์</td><td>XML อ่านได้ มี Ref ที่เลือกและ source ตามเกณฑ์ helper</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 14:43:54 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-141</td><td>Save XML หลายใบ</td><td>เลือก GCL สองใบ → Save XML → อ่านไฟล์</td><td>XML อ่านได้ มี Ref ของสองใบที่เลือกและ source ตามเกณฑ์ helper</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 14:46:52 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-142</td><td>Save PDF ใบเดียว</td><td>เลือก GCL หนึ่งใบ → Save PDF → อ่านไฟล์</td><td>PDF มี signature/EOF อ่านข้อความได้และมี Ref ที่เลือก</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 14:47:49 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-143</td><td>Save PDF หลายใบ</td><td>เลือก GCL สองใบ → Save PDF → อ่านไฟล์</td><td>PDF อ่านข้อความได้และมี Ref ของใบที่เลือก</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 14:49:16 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-144</td><td>XML/PDF ไม่เลือกแถว</td><td>ไม่เลือกแถว → Save XML/Save PDF</td><td>มี guard และไม่มี download เริ่มขึ้น</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 14:49:18 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-145</td><td>Print จาก Control</td><td>เปิด Control → Print</td><td>ได้ PDF อ่านได้ของ Ref ใบนี้</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 14:50:46 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-146</td><td>Print จากแถว</td><td>กด Print ของแถวเป้าหมาย</td><td>เปิด Ref ถูกใบและได้ PDF ของใบนั้น</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 14:52:13 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-147</td><td>Event</td><td>เปิด Event ของ Ref เป้าหมาย</td><td>เข้า VIEW ของ Ref ถูกต้องและ Detail ไม่เปลี่ยน</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 14:53:29 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-148</td><td>Print Change Port</td><td>เปิด Change Port → NEXT โดยไม่เลือก port ใหม่</td><td>ต้องระบุ port ใหม่ก่อนผ่าน NEXT</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 14:53:54 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-149</td><td>Print Return Goods</td><td>เปิด Return Goods → เลือกเต็ม/บางส่วน</td><td>ตัวเลือกและ Source ที่เลือกคงถูกต้อง; ไม่ยืนยันผลส่งจริง</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 14:54:44 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-150</td><td>Example CSV template</td><td>กด Example File → อ่าน CSV template</td><td>มี BOM/59 คอลัมน์/3 comment/H2/D5 และลำดับ record/schema ตาม assertions</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 14:55:12 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="รอรัน"><td>GCL</td><td>TC-GCL-151</td><td>CSV 1 Header / 1 Detail</td><td>New Upload CSV → TestCSV_minimal กลุ่มแรก</td><td>สร้าง GCL1ใบ Detail1แถว ค่าตรงไฟล์และเปิดซ้ำคงเดิม</td><td class="pending">รอรัน<small>ลดชุดข้อมูลเป็น1Detailต่อGCLแล้ว ยังไม่ได้รันทวนชุดข้อมูลใหม่</small></td></tr><tr data-module="GCL" data-result="รอรัน"><td>GCL</td><td>TC-GCL-152</td><td>CSV 2 Header / Headerละ1 Detail</td><td>New Upload CSV → TestCSV_minimal.csv</td><td>สร้างGCL2ใบตาม2Header แต่ละใบมี1Detail ค่าตรงไฟล์</td><td class="pending">รอรัน<small>ลดชุดข้อมูลเป็น1Detailต่อGCLแล้ว ยังไม่ได้รันทวนชุดข้อมูลใหม่</small></td></tr><tr data-module="GCL" data-result="รอรัน"><td>GCL</td><td>TC-GCL-153</td><td>CSV zero/quoted/decimal แบบ1Detail</td><td>อัปโหลดแต่ละvariantแบบHeader1/Detail1</td><td>ค่า0 ไทย comma และทศนิยมตรงไฟล์/เปิดซ้ำ; ใช้1Detailต่อGCL</td><td class="pending">รอรัน<small>ลดชุดข้อมูลเป็น1Detailต่อGCLแล้ว ยังไม่ได้รันทวนชุดข้อมูลใหม่</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-155</td><td>DAT ไม่ถูกต้อง</td><td>Import DAT โดยไม่เลือกไฟล์ และ DAT bytes ไม่ถูกต้อง</td><td>มี guard/feedback และไม่สร้าง GCL จากข้อมูลผิด</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 14:54:46 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="รอรัน"><td>GCL</td><td>TC-GCL-157</td><td>DAT แบบ1DetailและRefทดสอบใหม่</td><td>เลือกGCL_single_detail.dat สร้างRefทดสอบไม่ซ้ำแล้วImport</td><td>สร้างgtcidใหม่1ใบ มี1Detail Control/Detailตรงไฟล์ ไม่อัปโหลดทับRefผู้ใช้</td><td class="pending">รอรัน<small>ลดชุดข้อมูลเป็น1Detailต่อGCLแล้ว ยังไม่ได้รันทวนชุดข้อมูลใหม่</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-160</td><td>Send: Export to PDF</td><td>เปิดหน้า Send → กด PDF</td><td>ได้ไฟล์ดาวน์โหลดจริงและไม่ว่าง; ไม่ตรวจเนื้อหาทุก field</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 15:01:42 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-161</td><td>Send: Export to XML</td><td>เปิดหน้า Send → กด XML</td><td>ได้ไฟล์ดาวน์โหลดจริงและไม่ว่าง; ไม่ตรวจเนื้อหาทุก field</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 15:01:59 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-162</td><td>Send: Export to Tiff</td><td>เปิดหน้า Send → กด Tiff</td><td>ได้ไฟล์ดาวน์โหลดจริงและไม่ว่าง; ไม่ตรวจเนื้อหาทุก field</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 15:02:12 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-163</td><td>Send: Export to Data</td><td>เปิดหน้า Send → กด Data</td><td>ได้ไฟล์ดาวน์โหลดจริงและไม่ว่าง; ไม่ตรวจเนื้อหาทุก field</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 15:02:27 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-164</td><td>Send: ขอเปิดตู้สินค้า</td><td>เปิดหน้า Send → กด ขอเปิดตู้สินค้า</td><td>มีหน้าต่าง popup เปิดจริง</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 15:03:03 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-165</td><td>Send: ใบนำคีย์</td><td>เปิดหน้า Send → กด ใบนำคีย์</td><td>มีหน้าต่าง popup เปิดจริง</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 15:03:20 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-166</td><td>Send: ใบนำคีย์ Online</td><td>เปิดหน้า Send → กด ใบนำคีย์ Online</td><td>ได้ไฟล์ดาวน์โหลดจริงและไม่ว่าง</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 15:02:43 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-167</td><td>Send: ใบนำคีย์ HTML</td><td>เปิดหน้า Send → กด ใบนำคีย์ HTML</td><td>มีหน้าต่าง popup เปิดจริง</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 15:03:47 เวลาไทย</small></td></tr><tr data-module="GCL" data-result="ข้าม"><td>GCL</td><td>TC-GCL-170</td><td>Check Status</td><td>เปิด Ref ที่ตั้ง → Check Status</td><td>response อ้าง Ref เดียวกันและไม่มี PHP/DB error</td><td class="skip">ข้าม<small>รันต่อ 30/10/2026 15:04:05 เวลาไทย; Set SPN_GCL_STATUS_REF for an owned UAT
+                    external-status fixture</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-180</td><td>เปิด Upload CSV หลังคลิก Ref</td><td>List → คลิก Ref → ไอคอน CSV</td><td>gtcid เดิม; มีช่องไฟล์และปุ่ม Upload</td><td class="pass">ผ่าน<small>รัน local 30/10/2026 20:13:29 เวลาไทย; ; HQVM400001908</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-181</td><td>Upload โดยไม่เลือกไฟล์</td><td>เปิด Ref → CSV → Upload โดยไม่มีไฟล์</td><td>มี alert ใหม่ให้เลือกไฟล์; Control/Detail คงเดิม</td><td class="pass">ผ่าน<small>รัน local 30/10/2026 20:13:54 เวลาไทย; ; HQVM400001909</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-182</td><td>ปฏิเสธ CSV ว่างและนามสกุลผิด</td><td>ใน Ref → แนบ empty.csv/wrong.txt → Upload ทีละกรณี</td><td>มี alert ใหม่แจ้งไฟล์ว่าง/เฉพาะ CSV; เปิดซ้ำ Control/Detail คงเดิม</td><td class="pass">ผ่าน<small>รัน local 30/10/2026 20:14:34 เวลาไทย; ; HQVM400001910</small></td></tr><tr data-module="GCL" data-result="ผ่าน"><td>GCL</td><td>TC-GCL-NEW-001</td><td>F7 → New GCL opens the unsaved upper form</td><td>F7 → New GCL</td><td>เปิดฟอร์มส่วนบนแบบ INSERT; ยังไม่มี Ref จองไว้</td><td class="pass">ผ่าน<small>รันต่อ 30/10/2026 13:12:59 เวลาไทย</small></td></tr></tbody>
+
+</table>
+
+<script>
+
+    const q = document.getElementById('search'), m = document.getElementById('module'), s = document.getElementById('result'), live = document.getElementById('autoRefresh'), rows = [...document.querySelectorAll('tbody tr')], details = document.querySelector('details');
+
+    const view = new URLSearchParams(location.hash.slice(1));
+
+    q.value = view.get('q') || ''; m.value = view.get('module') || ''; s.value = view.get('result') || ''; live.checked = view.get('live') !== '0';
+
+    function saveView() { const p = new URLSearchParams(); if (q.value) p.set('q', q.value); if (m.value) p.set('module', m.value); if (s.value) p.set('result', s.value); p.set('live', live.checked ? '1' : '0'); if (details?.open) p.set('notes', '1'); history.replaceState(null, '', '#' + p.toString()); }
+
+    function filter() { let n = 0; for (const r of rows) { const show = (!m.value || r.dataset.module === m.value) && (!s.value || r.dataset.result === s.value) && r.textContent.toLowerCase().includes(q.value.toLowerCase()); r.hidden = !show; if (show) n++ } document.getElementById('count').textContent = n + ' / ' + rows.length + ' แถว'; }
+
+    q.oninput = m.onchange = s.onchange = () => { filter(); saveView(); }; live.onchange = saveView; filter();
+
+    addEventListener('DOMContentLoaded', () => { const d = document.querySelector('details'); if (d) { d.open = view.get('notes') === '1'; d.ontoggle = saveView; } try { const y = Number(sessionStorage.getItem('spnReportScroll') || 0); scrollTo(0, y); } catch { } });
+
+    setInterval(() => { if (!live.checked || document.hidden) return; saveView(); try { sessionStorage.setItem('spnReportScroll', String(scrollY)); } catch { } location.reload(); }, 15000);
+
+</script>
+
+
+
+</html>

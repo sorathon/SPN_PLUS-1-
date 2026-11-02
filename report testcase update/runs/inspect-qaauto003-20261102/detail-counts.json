@@ -1,0 +1,90 @@
+{
+  "detailRows": 10,
+  "blankRows": 0,
+  "sourceGroups": {
+    "HQVM200002174": 1,
+    "HQVM200002175": 1,
+    "ASEM200000699": 1,
+    "DUHS200033488": 1,
+    "DUHS200033489": 1,
+    "DUHS200033280": 1,
+    "DUHR200020561": 1,
+    "ASEM200000629": 1,
+    "ASEM200000630": 1,
+    "ASEM200000631": 1
+  },
+  "minDatabaseId": 3691042,
+  "maxDatabaseId": 3691051,
+  "samples": [
+    {
+      "detailId": "gtcdid:3691042",
+      "itemNo": "0002",
+      "source": "HQVM200002174",
+      "invoice": "INVnum5wn3h1y98",
+      "description": "EXPORT AUTOMATION ITEM สินค้าทดสอบขาออก"
+    },
+    {
+      "detailId": "gtcdid:3691043",
+      "itemNo": "0002",
+      "source": "HQVM200002175",
+      "invoice": "INVrb93app1zpo5",
+      "description": "EXPORT AUTOMATION ITEM สินค้าทดสอบขาออก"
+    },
+    {
+      "detailId": "gtcdid:3691044",
+      "itemNo": "1",
+      "source": "ASEM200000699",
+      "invoice": "VPC20100108",
+      "description": "THAI HOM MALI RICE WHITE RICE 100% packing in double bags inner plastic bag and outer polypropylene "
+    },
+    {
+      "detailId": "gtcdid:3691045",
+      "itemNo": "2",
+      "source": "DUHS200033488",
+      "invoice": "E2305012",
+      "description": "UNIT ASSY, FUEL PUMP ปั๊มน้ำมันเชื้อเพลิงสำเร็จรูป"
+    },
+    {
+      "detailId": "gtcdid:3691046",
+      "itemNo": "3",
+      "source": "DUHS200033489",
+      "invoice": "E2305013",
+      "description": "Lever, Cock ส่วนประกอบคาร์บูเรเตอร์"
+    },
+    {
+      "detailId": "gtcdid:3691047",
+      "itemNo": "4",
+      "source": "DUHS200033280",
+      "invoice": "CN-NJ-PINV23-004",
+      "description": "WIRE SET, LEAD ชุดสายไฟ"
+    },
+    {
+      "detailId": "gtcdid:3691048",
+      "itemNo": "5",
+      "source": "DUHR200020561",
+      "invoice": "SIV2305002",
+      "description": "FLOAT COMP\n ส่วนประกอบคาร์บูเรเตอร์"
+    },
+    {
+      "detailId": "gtcdid:3691049",
+      "itemNo": "6",
+      "source": "ASEM200000629",
+      "invoice": "NXTKBT0018",
+      "description": "KUBOTA AGRICULTURAL TRACTOR  รถแทรกเตอร์เพื่อการเกษตรคูโบต้า"
+    },
+    {
+      "detailId": "gtcdid:3691050",
+      "itemNo": "7",
+      "source": "ASEM200000630",
+      "invoice": "TEST001",
+      "description": "FLOAT COMP\n ส่วนประกอบคาร์บูเรเตอร์"
+    },
+    {
+      "detailId": "gtcdid:3691051",
+      "itemNo": "8",
+      "source": "ASEM200000631",
+      "invoice": "TEST002",
+      "description": "KUBOTA AGRICULTURAL TRACTOR  รถแทรกเตอร์เพื่อการเกษตรคูโบต้า"
+    }
+  ]
+}

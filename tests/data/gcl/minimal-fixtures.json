@@ -1,0 +1,12 @@
+{
+  "originalHashes": {
+    "Test_ใบกำกับ.csv": "4f949ace5373db18f1539d99d963d15083e0a58e9261faf81657e0c7d984cc4e",
+    "TestCSV.csv": "374571068b665f4eb68b593abf6b69ffb2825f0bc889965b1c827d07b5658c22",
+    "HQVM400001853.dat": "4767872cac523ef7ff72a38fa0c0c0677ae281bc27dd4d193a60a74a6da8bc23"
+  },
+  "workspaceCsv": "Test_ใบกำกับ_1แถว.csv",
+  "newCsv": "TestCSV_minimal.csv",
+  "dat": "GCL_single_detail.dat",
+  "detailsPerGcl": 1,
+  "note": "Original files and existing server Ref are unchanged. DAT runtime uses a fresh reference for each default upload."
+}

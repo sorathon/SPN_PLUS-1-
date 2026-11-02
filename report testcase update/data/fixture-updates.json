@@ -1,0 +1,26 @@
+{
+  "TC-GCL-151": {
+    "changedAt": "2026-11-02T03:43:49.140533+00:00",
+    "name": "CSV 1 Header / 1 Detail",
+    "steps": "New Upload CSV → TestCSV_minimal กลุ่มแรก",
+    "check": "สร้าง GCL1ใบ Detail1แถว ค่าตรงไฟล์และเปิดซ้ำคงเดิม"
+  },
+  "TC-GCL-152": {
+    "changedAt": "2026-11-02T03:43:49.140533+00:00",
+    "name": "CSV 2 Header / Headerละ1 Detail",
+    "steps": "New Upload CSV → TestCSV_minimal.csv",
+    "check": "สร้างGCL2ใบตาม2Header แต่ละใบมี1Detail ค่าตรงไฟล์"
+  },
+  "TC-GCL-153": {
+    "changedAt": "2026-11-02T03:43:49.140533+00:00",
+    "name": "CSV zero/quoted/decimal แบบ1Detail",
+    "steps": "อัปโหลดแต่ละvariantแบบHeader1/Detail1",
+    "check": "ค่า0 ไทย comma และทศนิยมตรงไฟล์/เปิดซ้ำ; ใช้1Detailต่อGCL"
+  },
+  "TC-GCL-157": {
+    "changedAt": "2026-11-02T03:43:49.140533+00:00",
+    "name": "DAT แบบ1DetailและRefทดสอบใหม่",
+    "steps": "เลือกGCL_single_detail.dat สร้างRefทดสอบไม่ซ้ำแล้วImport",
+    "check": "สร้างgtcidใหม่1ใบ มี1Detail Control/Detailตรงไฟล์ ไม่อัปโหลดทับRefผู้ใช้"
+  }
+}

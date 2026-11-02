@@ -1,0 +1,21 @@
+{
+  "startedAt": "2026-10-30T13:48:00.2321013Z",
+  "label": "Range TC-FUNC-001 to TC-FUNC-011",
+  "stages": [
+    {
+      "project": "functional",
+      "ids": [
+        "TC-FUNC-001",
+        "TC-FUNC-010",
+        "TC-FUNC-011"
+      ],
+      "transmit": false,
+      "name": "valid-local-20261030-134800196-01"
+    }
+  ],
+  "selectedIds": [
+    "TC-FUNC-001",
+    "TC-FUNC-010",
+    "TC-FUNC-011"
+  ]
+}

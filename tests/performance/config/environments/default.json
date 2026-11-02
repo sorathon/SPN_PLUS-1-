@@ -1,0 +1,8 @@
+{
+  "baseURL": "${API_BASE_URL}",
+  "testType": "API Load Test",
+  "environment": "default",
+  "reportTitle": "API Performance Report",
+  "reportSubtitle": "k6 Load Test Results",
+  "httpTimeout": "30000ms"
+}

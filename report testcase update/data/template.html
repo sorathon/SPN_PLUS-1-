@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="th">
+<meta charset="utf-8">
+<title>SPN testcase รวมแบบย่อ</title>
+<style>
+    body {
+        font: 14px/1.55 "Segoe UI", sans-serif;
+        margin: 24px;
+        color: #17212b
+    }
+
+    h1 {
+        font-size: 24px
+    }
+
+    p {
+        max-width: 1300px
+    }
+
+    input,
+    select {
+        font: inherit;
+        padding: 7px;
+        margin: 0 8px 16px 0
+    }
+
+    input {
+        width: 360px
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        min-width: 1050px
+    }
+
+    th,
+    td {
+        border: 1px solid #cbd5e1;
+        padding: 9px;
+        vertical-align: top
+    }
+
+    th {
+        position: sticky;
+        top: 0;
+        background: #16324f;
+        color: white;
+        text-align: left
+    }
+
+    tr:nth-child(even) {
+        background: #f3f6fa
+    }
+
+    td:nth-child(2) {
+        white-space: nowrap
+    }
+
+    small {
+        display: block;
+        color: #475569;
+        margin-top: 5px
+    }
+
+    .pass {
+        color: #166534
+    }
+
+    .fail {
+        color: #b91c1c
+    }
+
+    .skip {
+        color: #854d0e
+    }
+
+    .pending {
+        color: #475569
+    }
+
+    @media print {
+
+        input,
+        select,
+        .controls {
+            display: none
+        }
+
+        th {
+            position: static
+        }
+
+        body {
+            font-size: 9pt;
+            margin: 0
+        }
+
+        table {
+            min-width: 0
+        }
+
+        tr {
+            break-inside: avoid
+        }
+
+        @page {
+            size: A4 landscape;
+            margin: 10mm
+        }
+</style>
+<h1>Testcase รวม Import / Export / GCL — แบบย่อ</h1>
+<p>__HEADER__</p>
+<p>__SUMMARY__</p>
+<p>__NOTICE__</p>
+<details>
+    <summary>สาเหตุและการแก้ไขจาก debug รอบนี้</summary>
+    <ul>
+        <li>Re-Avg: assertion เดิมรอ 5 วินาที แต่ trace วัดการรอข้อความเสร็จได้ประมาณ 24 วินาที ปรับเป็น 120 วินาทีแล้ว
+            TC-EXP-080/081/082 ผ่านในรอบที่ใช้ session เดียว</li>
+        <li>Navigation: บาง request เปิด workspace ใช้ 12–24 วินาที และมี iframe/lookup ต่อ ทำให้ timeout เดิม 15/30
+            วินาทีไม่พอ ปรับเฉพาะ Export/GCL; Import คงเดิม</li>
+        <li>Session: พบ runner เก่ายังทำงานนอก sandbox จึงหยุด runner เก่าและ watcher ก่อนรอบ valid-*
+            ผลจากรอบที่ซ้อนกันไม่ถูกใช้แทนผลในรายงาน</li>
+        <li>TC-EXP-064: XML มี Detail 1 ตัวและ child fields 19 ตัว หลังนำเข้าพบ Item จริง 1 กับแถว 0000-0000 อีก 18 แถว
+            สงสัยการอ่าน child fields เป็นหลาย Detail; เป็นข้อสันนิษฐานจาก mapping ยังไม่มี source PHP backend ใน
+            workspace เพื่อแก้ยืนยัน</li>
+        <li>TC-EXP-050: JavaScript ใน response ของหน้า Export มี countSel guard สำหรับ Save XLS แต่ handler Save XLS New
+            เริ่ม AJAX โดยไม่มี guard เดียวกัน จึงไม่แสดง selection alert ผลยังคงไม่ผ่าน</li>
+        <li>TC-EXP-020/022: tree ภายนอกยังแสดงข้อมูลเก่าหลัง detailfrm บันทึก ปรับให้เปิด workspace ใหม่ก่อนตรวจ
+            persistence โดยคง expected Invoice/Item เดิม ทั้งสองเคสผ่านใน valid-4-tree แล้ว</li>
+        <li>Send/Cancel Export 070/071: ผู้ใช้อนุญาตชัดเจนให้ใช้เอกสารทดสอบที่สร้างใหม่เท่านั้น ทั้งสองเคสรันผ่านแล้ว
+            Send = Gateway Accept / SEND และ Cancel = SEND_CANCEL โดยเลขใบขนคงเดิม; GCL actual Send ยังคงปิด</li>
+        <li>TC-GCL-123/124: helper เดิมกลับ List หลังเห็นเพียง request เริ่มต้น ทำให้ชนกับ redirect ของ Copy;
+            เปลี่ยนให้รอ main frame commit และโหลดเสร็จก่อนค้นสำเนา ทั้ง 123 และ 124 รันซ้ำผ่านแล้ว รวม Control/Detail
+            ของสำเนาสองใบใน 123 โดยคง assertions เดิม</li>
+        <li>TC-EXP-070: แก้การอ่านข้อความก่อน DOM ของ Gateway receipt แสดงผล โดยรอหัวข้อ Gateway / Ref / Status ก่อน
+            snapshot และ parse รันซ้ำด้วยเอกสารใหม่ผ่านแล้ว: Gateway Accept และสถานะ SEND</li>
+        <li>รายการเคส: ตามคำสั่งล่าสุดตัด 17 เคสของ New GCL ออกจากชุดทดสอบและรายการปัจจุบัน เหลือ TC-GCL-NEW-001;
+            รวมปัจจุบัน 252 เคส และ GCL 106 เคส</li>
+        <li>รันต่อ: ผู้ใช้สั่งรัน GCL อีก 80 เคสที่ยังรอรัน โดยคงผล Import/Export และเคสที่รันจบแล้ว ใช้ตัวรันทีละชุด
+            Actual Send GCL ยังคงปิดตามเงื่อนไขเดิม; เคสที่ขาด fixture/opt-in บันทึก SKIP พร้อมเหตุผล</li>
+        <li>เวลารวมเคสที่เตรียม source: ปรับกลุ่ม list/create-control/detail/files-print เป็น 300s เพื่อรองรับการสร้าง
+            Export/GCL และ Re-Avg 120s โดยคง assertions เดิม เคส 004 ที่เริ่มก่อนปรับหยุดเตรียมข้อมูลที่งบเดิม 150s
+            และจัดตรวจซ้ำหลังชุดหลัก</li>
+        <li>รันต่อ Detail: คำค้น GCL source บางครั้งใช้ประมาณ 49.6s (HTTP200 กลับ Goods Transition List) จึงให้ GCL
+            Search รอเอกสารใหม่ได้ 90s โดยไม่ติด auto-navigation 45s; ให้ owned source ใหม่สุดมาก่อนและยังตรวจ
+            allocation เสมอ คงค่าเริ่มต้น waitForReload ของ Import ไว้ 45s</li>
+    </ul>
+</details>
+<div class="controls"><input id="search" placeholder="ค้น ID / ชื่อ / ขั้นตอน / จุดตรวจ"><select id="module">
+        <option value="">ทุกส่วน</option>
+        <option>IMPORT</option>
+        <option>EXPORT</option>
+        <option>GCL</option>
+    </select><select id="result">
+        <option value="">ทุกผล</option>
+        <option>ผ่าน</option>
+        <option>ไม่ผ่าน</option>
+        <option>ข้าม</option>
+        <option>รอรัน</option>
+        <option>กำลังรัน</option>
+        <option>หยุดกลางทาง</option>
+    </select><label style="white-space:nowrap;margin-right:12px"><input id="autoRefresh" type="checkbox" checked
+            style="width:auto"> รีเฟรชทุก 15 วินาที</label><span id="count">263 แถว</span></div>
+<table>
+    <thead>
+        <tr>
+            <th>ส่วน</th>
+            <th>ID</th>
+            <th>ชื่อ testcase</th>
+            <th>ขั้นตอนย่อ</th>
+            <th>ตรวจอะไร</th>
+            <th>ผลรันรอบนี้</th>
+        </tr>
+    </thead>
+    <tbody>__ROWS__</tbody>
+</table>
+<script>
+    const q = document.getElementById('search'), m = document.getElementById('module'), s = document.getElementById('result'), live = document.getElementById('autoRefresh'), rows = [...document.querySelectorAll('tbody tr')], details = document.querySelector('details');
+    const view = new URLSearchParams(location.hash.slice(1));
+    q.value = view.get('q') || ''; m.value = view.get('module') || ''; s.value = view.get('result') || ''; live.checked = view.get('live') !== '0';
+    function saveView() { const p = new URLSearchParams(); if (q.value) p.set('q', q.value); if (m.value) p.set('module', m.value); if (s.value) p.set('result', s.value); p.set('live', live.checked ? '1' : '0'); if (details?.open) p.set('notes', '1'); history.replaceState(null, '', '#' + p.toString()); }
+    function filter() { let n = 0; for (const r of rows) { const show = (!m.value || r.dataset.module === m.value) && (!s.value || r.dataset.result === s.value) && r.textContent.toLowerCase().includes(q.value.toLowerCase()); r.hidden = !show; if (show) n++ } document.getElementById('count').textContent = n + ' / ' + rows.length + ' แถว'; }
+    q.oninput = m.onchange = s.onchange = () => { filter(); saveView(); }; live.onchange = saveView; filter();
+    addEventListener('DOMContentLoaded', () => { const d = document.querySelector('details'); if (d) { d.open = view.get('notes') === '1'; d.ontoggle = saveView; } try { const y = Number(sessionStorage.getItem('spnReportScroll') || 0); scrollTo(0, y); } catch { } });
+    setInterval(() => { if (!live.checked || document.hidden) return; saveView(); try { sessionStorage.setItem('spnReportScroll', String(scrollY)); } catch { } location.reload(); }, 15000);
+</script>
+
+</html>

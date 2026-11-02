@@ -1,0 +1,647 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Users\\iTservice\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe",
+      "C:\\Users\\iTservice\\OneDrive\\เอกสาร\\SPN_PLUS\\tests\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--config",
+      "C:\\Users\\iTservice\\OneDrive\\เอกสาร\\SPN_PLUS\\scripts\\testcases-runtime\\run.config.ts",
+      "--project=functional",
+      "--grep",
+      "(?:TC-FUNC-001:|TC-FUNC-010:|TC-FUNC-011:)",
+      "--headed",
+      "--workers=1",
+      "--retries=0",
+      "--trace=retain-on-failure"
+    ],
+    "configFile": "C:\\Users\\iTservice\\OneDrive\\เอกสาร\\SPN_PLUS\\scripts\\testcases-runtime\\run.config.ts",
+    "rootDir": "C:/Users/iTservice/OneDrive/เอกสาร/SPN_PLUS/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/iTservice/OneDrive/เอกสาร/SPN_PLUS/report testcase update/runs/valid-local-20261030-134800196-01/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "setup",
+        "name": "setup",
+        "testDir": "C:/Users/iTservice/OneDrive/เอกสาร/SPN_PLUS/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "fixtures/auth.setup.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "C:/Users/iTservice/OneDrive/เอกสาร/SPN_PLUS/report testcase update/runs/valid-local-20261030-134800196-01/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "setup-editor",
+        "name": "setup-editor",
+        "testDir": "C:/Users/iTservice/OneDrive/เอกสาร/SPN_PLUS/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "fixtures/auth.setup.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "C:/Users/iTservice/OneDrive/เอกสาร/SPN_PLUS/report testcase update/runs/valid-local-20261030-134800196-01/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "setup-viewer",
+        "name": "setup-viewer",
+        "testDir": "C:/Users/iTservice/OneDrive/เอกสาร/SPN_PLUS/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "fixtures/auth.setup.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "C:/Users/iTservice/OneDrive/เอกสาร/SPN_PLUS/report testcase update/runs/valid-local-20261030-134800196-01/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "api",
+        "name": "api",
+        "testDir": "C:/Users/iTservice/OneDrive/เอกสาร/SPN_PLUS/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "api/**/*.api.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "C:/Users/iTservice/OneDrive/เอกสาร/SPN_PLUS/report testcase update/runs/valid-local-20261030-134800196-01/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "functional",
+        "name": "functional",
+        "testDir": "C:/Users/iTservice/OneDrive/เอกสาร/SPN_PLUS/tests",
+        "testIgnore": [
+          "functional/export/**/*.spec.ts",
+          "functional/gcl/**/*.spec.ts"
+        ],
+        "testMatch": [
+          "functional/**/*.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "C:/Users/iTservice/OneDrive/เอกสาร/SPN_PLUS/report testcase update/runs/valid-local-20261030-134800196-01/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "export",
+        "name": "export",
+        "testDir": "C:/Users/iTservice/OneDrive/เอกสาร/SPN_PLUS/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "functional/export/**/*.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "C:/Users/iTservice/OneDrive/เอกสาร/SPN_PLUS/report testcase update/runs/valid-local-20261030-134800196-01/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "gcl",
+        "name": "gcl",
+        "testDir": "C:/Users/iTservice/OneDrive/เอกสาร/SPN_PLUS/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "functional/gcl/**/*.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "C:/Users/iTservice/OneDrive/เอกสาร/SPN_PLUS/report testcase update/runs/valid-local-20261030-134800196-01/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "e2e",
+        "name": "e2e",
+        "testDir": "C:/Users/iTservice/OneDrive/เอกสาร/SPN_PLUS/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "e2e/**/*.spec.ts"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json",
+        {
+          "outputFile": "C:\\Users\\iTservice\\OneDrive\\เอกสาร\\SPN_PLUS\\report testcase update\\runs\\valid-local-20261030-134800196-01\\results.json"
+        }
+      ],
+      [
+        "C:\\Users\\iTservice\\OneDrive\\เอกสาร\\SPN_PLUS\\scripts\\testcases-runtime\\reporter.cjs",
+        null
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "fixtures\\auth.setup.ts",
+      "file": "fixtures/auth.setup.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "authenticate viewer",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "setup-viewer",
+              "projectName": "setup-viewer",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5996,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-30T13:48:02.598Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6db7255f214771fc958b-1743d36934a512c4a0b5",
+          "file": "fixtures/auth.setup.ts",
+          "line": 49,
+          "column": 8
+        },
+        {
+          "title": "authenticate editor",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "setup-editor",
+              "projectName": "setup-editor",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3767,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-30T13:48:10.172Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6db7255f214771fc958b-76ed376ae5bb88fce94c",
+          "file": "fixtures/auth.setup.ts",
+          "line": 49,
+          "column": 8
+        },
+        {
+          "title": "authenticate user1",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "setup",
+              "projectName": "setup",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 29138,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-30T13:48:15.484Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6db7255f214771fc958b-aa5722121422dfb57fde",
+          "file": "fixtures/auth.setup.ts",
+          "line": 49,
+          "column": 8
+        }
+      ]
+    },
+    {
+      "title": "functional\\import-declaration\\create-edit.spec.ts",
+      "file": "functional/import-declaration/create-edit.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "[Create & Edit]",
+          "file": "functional/import-declaration/create-edit.spec.ts",
+          "line": 12,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC-FUNC-010: F7 [New] creates a draft declaration with a new reference no @smoke",
+              "ok": true,
+              "tags": [
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "functional",
+                  "projectName": "functional",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 12055,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Click F7 [ New ] on the list",
+                          "duration": 9464
+                        },
+                        {
+                          "title": "Verify the workspace shows a new reference no and an empty declaration",
+                          "duration": 153,
+                          "steps": [
+                            {
+                              "title": "Workspace · invoice/item counters: expected {\"invoices\":0,\"items\":0} — got {\"invoices\":0,\"items\":0}",
+                              "duration": 8
+                            }
+                          ]
+                        },
+                        {
+                          "title": "Verify the draft is listed with the draft status",
+                          "duration": 1280,
+                          "steps": [
+                            {
+                              "title": "List · rows for the new reference no: expected 1 — got 1",
+                              "duration": 3
+                            },
+                            {
+                              "title": "List · Reference No: expected \"HQVM100002436\" — got \"HQVM100002436\"",
+                              "duration": 2
+                            }
+                          ]
+                        }
+                      ],
+                      "startTime": "2026-10-30T13:48:46.145Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "3c207472d35143dbe952-ef83f659d85d1cff67aa",
+              "file": "functional/import-declaration/create-edit.spec.ts",
+              "line": 16,
+              "column": 7
+            },
+            {
+              "title": "TC-FUNC-011: header entry with autocomplete is saved and shown in the list @smoke",
+              "ok": true,
+              "tags": [
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "functional",
+                  "projectName": "functional",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 29836,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Create a draft",
+                          "duration": 3177
+                        },
+                        {
+                          "title": "Fill the header — importer, vessel (\"%\"), countries, ports and package unit via autocomplete",
+                          "duration": 20456
+                        },
+                        {
+                          "title": "Save (F12)",
+                          "duration": 1091
+                        },
+                        {
+                          "title": "Verify every header field after re-opening the workspace (Level 2)",
+                          "duration": 2670,
+                          "steps": [
+                            {
+                              "title": "Header · jobNo: expected \"PW6FXP771WQHRQR\" — got \"PW6FXP771WQHRQR\"",
+                              "duration": 1
+                            },
+                            {
+                              "title": "Header · importerCode: expected \"0001_001\" — got \"0001_001\"",
+                              "duration": 1
+                            },
+                            {
+                              "title": "Header · companyName: expected \"บริษัท เทเลแซท คอร์ปอเรชั่น จำกัด\" — got \"บริษัท เทเลแซท คอร์ปอเรชั่น จำกัด\"",
+                              "duration": 2
+                            },
+                            {
+                              "title": "Header · companyTaxNo: expected \"3011551325\" — got \"3011551325\"",
+                              "duration": 1
+                            },
+                            {
+                              "title": "Header · companyBranch: expected \"0001\" — got \"0001\"",
+                              "duration": 2
+                            },
+                            {
+                              "title": "Header · companyEnglishName: expected \"TELESAT CORPORATION CO.,LTD.\" — got \"TELESAT CORPORATION CO.,LTD.\"",
+                              "duration": 2
+                            },
+                            {
+                              "title": "Header · postCode: expected \"10110\" — got \"10110\"",
+                              "duration": 1
+                            },
+                            {
+                              "title": "Header · customsClearanceCard: expected \"\" — got \"\"",
+                              "duration": 1
+                            },
+                            {
+                              "title": "Header · transportMode: expected \"1\" — got \"1\"",
+                              "duration": 1
+                            },
+                            {
+                              "title": "Header · vessel: expected \"TEST 0001\" — got \"TEST 0001\"",
+                              "duration": 2
+                            },
+                            {
+                              "title": "Header · mawb: expected \"MPW6FXP771WQHRQR\" — got \"MPW6FXP771WQHRQR\"",
+                              "duration": 1
+                            },
+                            {
+                              "title": "Header · hawb: expected \"HPW6FXP771WQHRQR\" — got \"HPW6FXP771WQHRQR\"",
+                              "duration": 1
+                            },
+                            {
+                              "title": "Header · originCountry: expected \"CN\" — got \"CN\"",
+                              "duration": 2
+                            },
+                            {
+                              "title": "Header · consignmentCountry: expected \"CN\" — got \"CN\"",
+                              "duration": 1
+                            },
+                            {
+                              "title": "Header · releasePort: expected \"2801\" — got \"2801\"",
+                              "duration": 1
+                            },
+                            {
+                              "title": "Header · dischargePort: expected \"2801\" — got \"2801\"",
+                              "duration": 1
+                            },
+                            {
+                              "title": "Header · packageAmount: expected \"10\" — got \"10\"",
+                              "duration": 1
+                            },
+                            {
+                              "title": "Header · packageUnit: expected \"PK\" — got \"PK\"",
+                              "duration": 1
+                            },
+                            {
+                              "title": "Header · netWeight: expected \"100\" — got \"100\"",
+                              "duration": 1
+                            },
+                            {
+                              "title": "Header · grossWeight: expected \"120\" — got \"120\"",
+                              "duration": 1
+                            },
+                            {
+                              "title": "Header · arrivalDate: expected \"30-10-2026\" — got \"30-10-2026\"",
+                              "duration": 1
+                            },
+                            {
+                              "title": "Header · shippingMark: expected \"MARK PW6FXP771WQHRQR\" — got \"MARK PW6FXP771WQHRQR\"",
+                              "duration": 2
+                            },
+                            {
+                              "title": "Header · voyage: expected \"V001\" — got \"V001\"",
+                              "duration": 2
+                            }
+                          ]
+                        },
+                        {
+                          "title": "Verify the list row columns (Level 1)",
+                          "duration": 1717,
+                          "steps": [
+                            {
+                              "title": "List · Job No: expected \"PW6FXP771WQHRQR\" — got \"PW6FXP771WQHRQR\"",
+                              "duration": 3
+                            },
+                            {
+                              "title": "List · vessel: expected \"TEST 0001\" — got \"TEST 0001\"",
+                              "duration": 2
+                            },
+                            {
+                              "title": "List · reference date: expected \"2026-10-30\" — got \"2026-10-30\"",
+                              "duration": 2
+                            },
+                            {
+                              "title": "List · MAWB: expected \"MPW6FXP771WQHRQR\" — got \"MPW6FXP771WQHRQR\"",
+                              "duration": 3
+                            },
+                            {
+                              "title": "List · HAWB: expected \"HPW6FXP771WQHRQR\" — got \"HPW6FXP771WQHRQR\"",
+                              "duration": 1
+                            },
+                            {
+                              "title": "List · PK: expected \"10 PK\" — got \"10 PK\"",
+                              "duration": 2
+                            },
+                            {
+                              "title": "List · company name (cut): expected \"บริษัท เทเลแซท คอร์ปอเรชั่น จำกัด\" — got \"บริษัท เทเลแซท คอร์ปอเรชั่น จำกัด\"",
+                              "duration": 2
+                            }
+                          ]
+                        }
+                      ],
+                      "startTime": "2026-10-30T13:48:58.585Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "3c207472d35143dbe952-2657cbaa5c4f12ab7f09",
+              "file": "functional/import-declaration/create-edit.spec.ts",
+              "line": 43,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "functional\\import-declaration\\navigation.spec.ts",
+      "file": "functional/import-declaration/navigation.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "[Navigation]",
+          "file": "functional/import-declaration/navigation.spec.ts",
+          "line": 8,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC-FUNC-001: IMPORT card VIEW IMPORT opens the Import Declaration list @smoke",
+              "ok": true,
+              "tags": [
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "functional",
+                  "projectName": "functional",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4667,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Open Home with the saved session",
+                          "duration": 2240
+                        },
+                        {
+                          "title": "Verify the IMPORT service card is shown",
+                          "duration": 78
+                        },
+                        {
+                          "title": "Click VIEW IMPORT",
+                          "duration": 314
+                        },
+                        {
+                          "title": "Verify the list page with its toolbar, search and export controls",
+                          "duration": 1300
+                        }
+                      ],
+                      "startTime": "2026-10-30T13:49:28.728Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f3e12d3f55f352b1454d-766ef04ad15189f4bc49",
+              "file": "functional/import-declaration/navigation.spec.ts",
+              "line": 9,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-30T13:48:01.505Z",
+    "duration": 92704.309,
+    "expected": 6,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

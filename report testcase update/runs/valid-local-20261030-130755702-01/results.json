@@ -1,0 +1,370 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Users\\iTservice\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe",
+      "C:\\Users\\iTservice\\OneDrive\\เอกสาร\\SPN_PLUS\\tests\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--config",
+      "C:\\Users\\iTservice\\OneDrive\\เอกสาร\\SPN_PLUS\\scripts\\testcases-runtime\\run.config.ts",
+      "--project=functional",
+      "--grep",
+      "(?:TC-FUNC-123:)",
+      "--headed",
+      "--workers=1",
+      "--retries=0",
+      "--trace=retain-on-failure"
+    ],
+    "configFile": "C:\\Users\\iTservice\\OneDrive\\เอกสาร\\SPN_PLUS\\scripts\\testcases-runtime\\run.config.ts",
+    "rootDir": "C:/Users/iTservice/OneDrive/เอกสาร/SPN_PLUS/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/iTservice/OneDrive/เอกสาร/SPN_PLUS/report testcase update/runs/valid-local-20261030-130755702-01/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "setup",
+        "name": "setup",
+        "testDir": "C:/Users/iTservice/OneDrive/เอกสาร/SPN_PLUS/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "fixtures/auth.setup.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "C:/Users/iTservice/OneDrive/เอกสาร/SPN_PLUS/report testcase update/runs/valid-local-20261030-130755702-01/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "setup-editor",
+        "name": "setup-editor",
+        "testDir": "C:/Users/iTservice/OneDrive/เอกสาร/SPN_PLUS/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "fixtures/auth.setup.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "C:/Users/iTservice/OneDrive/เอกสาร/SPN_PLUS/report testcase update/runs/valid-local-20261030-130755702-01/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "setup-viewer",
+        "name": "setup-viewer",
+        "testDir": "C:/Users/iTservice/OneDrive/เอกสาร/SPN_PLUS/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "fixtures/auth.setup.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "C:/Users/iTservice/OneDrive/เอกสาร/SPN_PLUS/report testcase update/runs/valid-local-20261030-130755702-01/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "api",
+        "name": "api",
+        "testDir": "C:/Users/iTservice/OneDrive/เอกสาร/SPN_PLUS/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "api/**/*.api.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "C:/Users/iTservice/OneDrive/เอกสาร/SPN_PLUS/report testcase update/runs/valid-local-20261030-130755702-01/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "functional",
+        "name": "functional",
+        "testDir": "C:/Users/iTservice/OneDrive/เอกสาร/SPN_PLUS/tests",
+        "testIgnore": [
+          "functional/export/**/*.spec.ts",
+          "functional/gcl/**/*.spec.ts"
+        ],
+        "testMatch": [
+          "functional/**/*.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "C:/Users/iTservice/OneDrive/เอกสาร/SPN_PLUS/report testcase update/runs/valid-local-20261030-130755702-01/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "export",
+        "name": "export",
+        "testDir": "C:/Users/iTservice/OneDrive/เอกสาร/SPN_PLUS/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "functional/export/**/*.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "C:/Users/iTservice/OneDrive/เอกสาร/SPN_PLUS/report testcase update/runs/valid-local-20261030-130755702-01/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "gcl",
+        "name": "gcl",
+        "testDir": "C:/Users/iTservice/OneDrive/เอกสาร/SPN_PLUS/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "functional/gcl/**/*.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "C:/Users/iTservice/OneDrive/เอกสาร/SPN_PLUS/report testcase update/runs/valid-local-20261030-130755702-01/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "e2e",
+        "name": "e2e",
+        "testDir": "C:/Users/iTservice/OneDrive/เอกสาร/SPN_PLUS/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "e2e/**/*.spec.ts"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json",
+        {
+          "outputFile": "C:\\Users\\iTservice\\OneDrive\\เอกสาร\\SPN_PLUS\\report testcase update\\runs\\valid-local-20261030-130755702-01\\results.json"
+        }
+      ],
+      [
+        "C:\\Users\\iTservice\\OneDrive\\เอกสาร\\SPN_PLUS\\scripts\\testcases-runtime\\reporter.cjs",
+        null
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "fixtures\\auth.setup.ts",
+      "file": "fixtures/auth.setup.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "authenticate viewer",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "setup-viewer",
+              "projectName": "setup-viewer",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4791,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-30T13:07:58.235Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6db7255f214771fc958b-1743d36934a512c4a0b5",
+          "file": "fixtures/auth.setup.ts",
+          "line": 49,
+          "column": 8
+        },
+        {
+          "title": "authenticate editor",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "setup-editor",
+              "projectName": "setup-editor",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3640,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-30T13:08:04.397Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6db7255f214771fc958b-76ed376ae5bb88fce94c",
+          "file": "fixtures/auth.setup.ts",
+          "line": 49,
+          "column": 8
+        },
+        {
+          "title": "authenticate user1",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "setup",
+              "projectName": "setup",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6641,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-30T13:08:09.175Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6db7255f214771fc958b-aa5722121422dfb57fde",
+          "file": "fixtures/auth.setup.ts",
+          "line": 49,
+          "column": 8
+        }
+      ]
+    },
+    {
+      "title": "functional\\import-declaration\\invoice-mapping.spec.ts",
+      "file": "functional/import-declaration/invoice-mapping.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Import · Add Invoice CSV Mapping",
+          "file": "functional/import-declaration/invoice-mapping.spec.ts",
+          "line": 43,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC-FUNC-123: Preview Data displays the CSV invoice and all five product codes without saving @regression",
+              "ok": true,
+              "tags": [
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 600000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "functional",
+                  "projectName": "functional",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 38183,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-30T13:08:17.082Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "preview.txt",
+                          "contentType": "text/plain",
+                          "body": "SFFWTTEwMDAwMjQzNQoKCgpQcm9wZXJ0eQowIEludm9pY2UocykKMCBJdGVtKHMpCmNhbGN1bGF0aW9uIHYuMgoKR28gdG8gRGVjbGFyYXRpb24gbGlzdAoKCgoKCgoKCgkJCgpJbnZvaWNlIE5vIDogUUEtSW1wb3J0LTAxLUlOVgoKKEhlYWRlcikKaW52b2ljZU5vCWludm9pY2VEYXRlCURfY29tcGFueU5hbWUJRF9jb21wYW55RW5nbGlzaE5hbWUJRF9uZXRXZWlnaHQJRF9ncm9zc1dlaWdodAlEX25ldFdlaWdodFVuaXQJRF90b3RhbFBhY2thZ2VBbW91bnQJRF90b3RhbFBhY2thZ2VVbml0CWludm9pY2VDdXJyZW5jeQrCoFFBLUltcG9ydC0wMS1JTlYJwqAyMzEwMjAyNgnCoENvbXBhbnkgVGVzdFMgKFRIQUlMQU5EKSBMVEQJwqBDb21wYW55IFRlc3RTIChUSEFJTEFORCkgTFRECcKgMTIJwqAxMgnCoEtHTQnCoDEyCcKgUFgJwqBVU0QKCihEZXRhaWwpCnVuaXRQcmljZUZvcmVpZ24JaW52b2ljZUFtb3VudEZvcmVpZ24JY3VycmVuY3kJcGFja2FnZUFtb3VudAlwYWNrYWdlVW5pdAluZXRXZWlnaHQJbmV0V2VpZ2h0VW5pdAlpdGVtR3Jvc3NXZWlnaHQJaXRlbUdyb3NzV2VpZ2h0VW5pdAlpbnZvaWNlUXVhbnRpdHkJaW52b2ljZVF1YW50aXR5VW5pdAlxdWFudGl0eQlxdWFudGl0eVVuaXQJcXVhbnRpdHlSZW0JcXVhbnRpdHlVbml0Mgl0YXJpZmZDb2RlCXN0YXRpc3RpY2FsQ29kZQlwcml2aWxlZ2VDb2RlCXRhcmlmZlNlcXVlbmNlCWJyYW5kTmFtZQl0aGFpRGVzY3JpcHRpb25PZkdvb2RzCXByb2R1Y3RDb2RlCWVuZ2xpc2hEZXNjcmlwdGlvbk9mR29vZHMJb3JpZ2luQ291bnRyeQrCoDEyMAnCoDEyMAnCoFVTRAnCoDEyCcKgUEsJwqAxMgnCoEtHTQnCoDEyCcKgS0dNCcKgMTIJwqBDNjIJwqAxMgnCoEM2MgnCoDEyCcKgQzYyCcKgMDAwMDg1NDIzMTAwCcKgMDAwCcKgMDAwCcKgNTAwNzAJwqBOTyBCUkFORAnCoOC4hOC4peC4tOC4m+C4q+C4meC4teC4muC4luC4suC4lOC5g+C4quC5iOC4iuC4tOC5ieC4meC4h+C4suC4meC4l+C4s+C4iOC4suC4geC5gOC4q+C4peC5h+C4gQnCoDIwMjEwODI0LTEzNTAxOC0wMQnCoENCQyBUUkFZIENMSVAgVFJBWSBDTElQCcKgSlAKwqAxMjAJwqAxMjAJwqBVU0QJwqAxMgnCoFBLCcKgMTIJwqBLR00JwqAxMgnCoEtHTQnCoDEyCcKgQzYyCcKgMTIJwqBDNjIJwqAxMgnCoEM2MgnCoDAwMDA4NTQyMzEwMAnCoDAwMAnCoDAwMAnCoDUwMDcxCcKgTk8gQlJBTkQJwqDguITguKXguLTguJvguKvguJnguLXguJrguJbguLLguJTguYPguKrguYjguIrguLTguYnguJnguIfguLLguJnguJfguLPguIjguLLguIHguYDguKvguKXguYfguIEJwqAyMDIxMDgyNC0xMzUwMTgtMDIJwqBDQkMgVFJBWSBDTElQIFRSQVkgQ0xJUAnCoEpQCsKgMTIwCcKgMTIwCcKgVVNECcKgMTIJwqBQSwnCoDEyCcKgS0dNCcKgMTIJwqBLR00JwqAxMgnCoEM2MgnCoDEyCcKgQzYyCcKgMTIJwqBDNjIJwqAwMDAwODU0MjMxMDAJwqAwMDAJwqAwMDAJwqA1MDA3MgnCoE5PIEJSQU5ECcKg4LiE4Lil4Li04Lib4Lir4LiZ4Li14Lia4LiW4Liy4LiU4LmD4Liq4LmI4LiK4Li04LmJ4LiZ4LiH4Liy4LiZ4LiX4Liz4LiI4Liy4LiB4LmA4Lir4Lil4LmH4LiBCcKgMjAyMTA4MjQtMTM1MDE4LTAzCcKgQ0JDIFRSQVkgQ0xJUCBUUkFZIENMSVAJwqBKUArCoDEyMAnCoDEyMAnCoFVTRAnCoDEyCcKgUEsJwqAxMgnCoEtHTQnCoDEyCcKgS0dNCcKgMTIJwqBDNjIJwqAxMgnCoEM2MgnCoDEyCcKgQzYyCcKgMDAwMDg1NDIzMTAwCcKgMDAwCcKgMDAwCcKgNTAwNzMJwqBOTyBCUkFORAnCoOC4hOC4peC4tOC4m+C4q+C4meC4teC4muC4luC4suC4lOC5g+C4quC5iOC4iuC4tOC5ieC4meC4h+C4suC4meC4l+C4s+C4iOC4suC4geC5gOC4q+C4peC5h+C4gQnCoDIwMjEwODI0LTEzNTAxOC0wNAnCoENCQyBUUkFZIENMSVAgVFJBWSBDTElQCcKgSlAKwqAxMjAJwqAxMjAJwqBVU0QJwqAxMgnCoFBLCcKgMTIJwqBLR00JwqAxMgnCoEtHTQnCoDEyCcKgQzYyCcKgMTIJwqBDNjIJwqAxMgnCoEM2MgnCoDAwMDA4NTQyMzEwMAnCoDAwMAnCoDAwMAnCoDUwMDc0CcKgTk8gQlJBTkQJwqDguITguKXguLTguJvguKvguJnguLXguJrguJbguLLguJTguYPguKrguYjguIrguLTguYnguJnguIfguLLguJnguJfguLPguIjguLLguIHguYDguKvguKXguYfguIEJwqAyMDIxMDgyNC0xMzUwMTgtMDUJwqBDQkMgVFJBWSBDTElQIFRSQVkgQ0xJUAnCoEpQ"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8f6b2df34d2751326d3d-f0976471fea248e9470a",
+              "file": "functional/import-declaration/invoice-mapping.spec.ts",
+              "line": 89,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-30T13:07:56.634Z",
+    "duration": 59550.562000000005,
+    "expected": 4,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

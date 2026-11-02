@@ -1,0 +1,3 @@
+{"id":"TC-FUNC-010","title":"TC-FUNC-010: F7 [New] creates a draft declaration with a new reference no @smoke","status":"passed","duration":12055,"endedAt":"2026-10-30T13:48:58.585Z","errors":[],"annotations":[],"attachments":[]}
+{"id":"TC-FUNC-011","title":"TC-FUNC-011: header entry with autocomplete is saved and shown in the list @smoke","status":"passed","duration":29836,"endedAt":"2026-10-30T13:49:28.449Z","errors":[],"annotations":[],"attachments":[]}
+{"id":"TC-FUNC-001","title":"TC-FUNC-001: IMPORT card VIEW IMPORT opens the Import Declaration list @smoke","status":"passed","duration":4667,"endedAt":"2026-10-30T13:49:33.431Z","errors":[],"annotations":[],"attachments":[]}
